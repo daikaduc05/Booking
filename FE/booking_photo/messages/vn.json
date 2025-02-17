@@ -1,0 +1,41 @@
+{
+  "Home": {
+    "text": "Chào bạn, khám phá những khoảnh khắc tuyệt vời cùng chúng tôi!",
+    "title": "Studio của tôi !",
+    "params1": "Chúng tôi cung cấp dịch vụ chụp ảnh chuyên nghiệp, từ cưới, sự kiện đến sản phẩm, giúp bạn lưu giữ những khoảnh khắc tuyệt vời.",
+    "params2": "Chúng tôi là đội ngũ nhiếp ảnh gia sáng tạo với nhiều năm kinh nghiệm. Chúng tôi không chỉ chụp ảnh, mà còn ghi lại những khoảnh khắc ý nghĩa, kể câu chuyện và mang lại cảm xúc trong từng bức ảnh. Chúng tôi cam kết mang đến những tác phẩm chất lượng, sáng tạo và đầy cảm hứng. Với thiết bị hiện đại và kỹ thuật chuyên nghiệp, chúng tôi luôn nỗ lực vượt qua mong đợi của bạn."
+  },
+  "Navbar": {
+    "home": "Trang chủ",
+    "explore": "Khám phá",
+    "packages": "Gói dịch vụ",
+    "rating": "Đánh giá của bạn",
+    "contact": "Liên hệ",
+    "menu": "Danh mục",
+    "book": "Đặt ngay !"
+  },
+  "Explore": {
+    "title": "Khám phá cùng chúng tôi !",
+    "params1": "Những khoảnh khắc gia đình quý giá như ngọc, hãy lưu giữ chúng trong những bức ảnh đẹp.",
+    "params2": "Tình yêu đẹp như một bức tranh, hãy để những khoảnh khắc ấy được vẽ lên bằng ánh sáng và màu sắc.",
+    "params3": "Niềm vui của trẻ em là niềm vui của cuộc sống, hãy để bức ảnh lưu giữ những giây phút đáng nhớ đó.",
+    "params4": "Một cuộc sống hạnh phúc là một cuộc sống được ghi lại qua những khoảnh khắc đẹp trong tình yêu.",
+    "params5": "Doanh nghiệp thành công là nơi mà sự sáng tạo, nỗ lực và đam mê hội tụ. Hãy để chúng tôi lưu giữ sự sáng tạo ấy."
+  },
+  "Packages": {
+    "title": "Gói dịch vụ"
+  },
+  "Rating": {
+    "title": "Đánh giá của bạn giúp chúng tôi hoàn thiện!",
+    "eMessage": "Vui lòng nhập đúng email!",
+    "ePlaceholder": "Nhập email của bạn",
+    "submit": "Gửi",
+    "cTitle": "Bình luận",
+    "pComment": "Nhập bình luận của bạn",
+    "toastSubmit": "Cảm ơn bạn đã phản hồi!"
+  },
+  "Footer": {
+   "title": "Thông tin liên hệ",
+    "address": "Địa chỉ liên lạc"
+  }
+}
