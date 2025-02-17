@@ -8,6 +8,8 @@ import org.hibernate.annotations.Nationalized;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @Entity
@@ -33,10 +35,21 @@ public class FormBooking {
     @Column(name = "name")
     private String name;
 
+    @Size(max = 255)
     @Nationalized
-    @Lob
     @Column(name = "message")
     private String message;
+
+    @Nationalized
+    @Column(name = "book_time")
+    private LocalDateTime bookTime;
+
+    @Nationalized
+    @Column(name = "create_at")
+    private LocalDateTime createAt;
+
+    @Column(name = "status")
+    private Boolean status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
