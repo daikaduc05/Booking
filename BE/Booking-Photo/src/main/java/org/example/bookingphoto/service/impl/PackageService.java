@@ -2,6 +2,7 @@ package org.example.bookingphoto.service.impl;
 
 import org.example.bookingphoto.dto.PackageCreateDTO;
 import org.example.bookingphoto.dto.PackageEditDTO;
+import org.example.bookingphoto.dto.PackageShowDTO;
 import org.example.bookingphoto.model.Package;
 import org.example.bookingphoto.repository.IPackageRepository;
 import org.example.bookingphoto.service.IPackageService;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -55,5 +57,10 @@ public class PackageService implements IPackageService {
         Package aPackage = optionalPackage.get();
 
         packageRepository.delete(aPackage);
+    }
+
+    @Override
+    public List<PackageShowDTO> showPackages() {
+        return packageRepository.showPackages();
     }
 }
