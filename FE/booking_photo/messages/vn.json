@@ -37,5 +37,25 @@
   "Footer": {
    "title": "Thông tin liên hệ",
     "address": "Địa chỉ liên lạc"
+  },
+  "Booking":{
+    "title": "Điền thông tin để hoàn tất đặt lịch"
+  },
+  "InfoForm" :{
+    "name": "Họ và tên",
+    "pName" : "Nhập họ và tên",
+    "email": "Email",
+    "pEmail": "Nhập email",
+    "location": "Địa chỉ",
+    "pLocation": "Nhập địa chỉ",
+    "date": "Ngày chụp",
+    "time": "Thời gian chụp",
+    "note": "Ghi chú",
+    "pNote": "Nhập ghi chú",
+    "submit": "Gửi",
+    "reset": "Trở lại trang chủ"
+  },
+  "PackageInfo" :{
+   "from" : "Từ"
   }
 }

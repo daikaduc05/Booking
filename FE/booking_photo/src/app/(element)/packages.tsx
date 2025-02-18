@@ -1,5 +1,7 @@
+'use client'
 import React from "react";
 import { useTranslations } from "next-intl";
+import { useParams, useRouter } from "next/navigation";
 export const packages = [
   {
     id: 1,
@@ -8,6 +10,7 @@ export const packages = [
     price: 3000,
     description:
       "Chụp ảnh và video gia đình, lưu giữ những khoảnh khắc ấm áp và vui vẻ.",
+    productId: [1, 2, 3, 4],
   },
   {
     id: 2,
@@ -16,6 +19,7 @@ export const packages = [
     price: 4000,
     description:
       "Chụp ảnh lãng mạn và tình tứ cho các cặp đôi, ghi lại những khoảnh khắc yêu thương.",
+    productId: [5, 6, 7, 8],
   },
   {
     id: 3,
@@ -24,6 +28,7 @@ export const packages = [
     price: 7000,
     description:
       "Chụp ảnh doanh nghiệp, sản phẩm và đội ngũ nhân viên chuyên nghiệp.",
+    productId: [9, 10, 11, 12],
   },
   {
     id: 4,
@@ -32,6 +37,7 @@ export const packages = [
     price: 9000,
     description:
       "Chụp ảnh và quay video trong ngày cưới, từ lễ cưới đến tiệc cưới.",
+    productId: [13, 14, 15, 16],
   },
   {
     id: 5,
@@ -40,17 +46,20 @@ export const packages = [
     price: 800,
     description:
       "Chụp ảnh doanh nghiệp, sản phẩm và đội ngũ nhân viên chuyên nghiệp.",
+    productId: [17, 18, 19, 20],
   },
 ];
 const Packages = () => {
   const t = useTranslations("Packages");
-
+  const router = useRouter();
+  const params = useParams();
   return (
     <div className="bg-[#d6d6d6] py-16">
       <h1 className="text-4xl text-center mb-12">{t("title")}</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mx-10 md:mx-20">
         {packages.map((item, index) => (
           <div
+          onClick={() => router.push(`/${params.locale}/booking/${item.id}`)}
             key={index}
             className="bg-white cursor-pointer hover:shadow-lg hover:scale-105 transform transition-all duration-300 rounded-xl overflow-hidden"
           >

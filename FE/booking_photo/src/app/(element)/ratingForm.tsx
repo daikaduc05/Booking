@@ -45,7 +45,7 @@ const RatingForm = () => {
   }
 
   return (
-    <div className="py-5 h-fit bg-[#5c5a5a] w-full flex flex-col items-center">
+    <div className="py-5 h-fit bg-[#5c5a5a] w-full flex flex-col items-center" >
       <h1 className="text-4xl text-center w-fit h-fit py-10 px-10 text-white">
         {t("title")}
       </h1>

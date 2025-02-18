@@ -11,14 +11,24 @@ const page = () => {
   return (
     <div>
       <Navbar />
-      <Home />
-      <Explore />
-      <Packages />
-      <RatingForm />
-      <Footer />
+      <section id="home">
+        <Home />
+      </section>
+      <section id="discover">
+        <Explore />
+      </section>
+      <section id="packages">
+        <Packages />
+      </section>
+      <section id="reviews">
+        <RatingForm />
+      </section>
+      <section id="contacts">
+        <Footer />
+      </section>
       <ToastContainer />
     </div>
-  );  
+  );
 };
 
 export default page;
