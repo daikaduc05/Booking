@@ -37,5 +37,26 @@
   "Footer": {
     "title": "Contact",
     "address": "Address"
+  },
+  "Booking" :{
+    "title": "Fill in the information to complete the booking"
+  },
+  "InfoForm" :{
+    "name": "Full name",
+    "pName" : "Enter your full name",
+    "email": "Email",
+    "pEmail": "Enter your email",
+    "location": "Address",
+    "pLocation": "Enter your address",
+    "date": "Date",
+    "time": "Time",
+    "note": "Note",
+    "pNote": "Enter your note",
+    "submit": "Send",
+    "reset": "Back to home"
+  },
+  "PackageInfo" :{
+    "from" : "From"
   }
+
 }

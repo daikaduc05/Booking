@@ -86,7 +86,7 @@ const Navbar = () => {
               </select>
             </div>
 
-            <button className="w-[120px] h-[50px] rounded-lg bg-[#c4c4c4] hover:bg-[#b0aeae] shadow-lg duration-300">
+            <button onClick={()=>scrollToSection("packages")} className="w-[120px] h-[50px] rounded-lg bg-[#c4c4c4] hover:bg-[#b0aeae] shadow-lg duration-300">
               {t("book")}
             </button>
           </div>

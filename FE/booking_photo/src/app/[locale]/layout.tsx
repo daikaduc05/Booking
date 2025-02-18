@@ -3,7 +3,7 @@ import { Lora } from "next/font/google"; // Import Lora font
 import "../globals.css";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-import { notFound } from "next/navigation";
+import { notFound, usePathname } from "next/navigation";
 import { routing } from "@/i18n/routing";
 
 // import { getMessages } from "next-intl/server";
@@ -31,7 +31,7 @@ export default async function RootLayout({
   if (!routing.locales.includes(locale as any)) {
     notFound();
   }
-
+  
   return (
     <html lang={locale}>
       <head>
