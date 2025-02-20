@@ -1,24 +1,39 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 
 const Login = () => {
-  const [key, setKey] = useState('');
+  const [user,setUser] = useState('');
+  const [pass,setPass] = useState('');
   const router = useRouter();
+  useEffect(() => {
+    const token = Cookies.get('token');
+    if(token){
+      router.push('/admin');
+    }
+  },[])
 
   const handleSubmit = async(e :any) => {
     e.preventDefault();
-    const res = await axios.post('http://localhost:8080/auth/authenticate', { key });
-    if(res){
-        Cookies.set('key', res.data.key, { expires: 1/24 });
-        router.push('/admin');
-        toast.success('Login success');
+    const data = {
+      user: user,
+      pass: pass
     }
-    else{
-        toast.error('Login failed');
+    console.log(data);
+    try {
+      const res = await axios.post('http://localhost:3000/api/admin/login',data);
+      if(res.data.success){
+        Cookies.set('token',res.data.token);
+        router.push('/admin');
+      }
+      else{
+        toast.error(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -27,13 +42,20 @@ const Login = () => {
       <div className="bg-white p-8 rounded-lg shadow-md w-80">
         <h2 className="text-2xl font-bold text-center mb-4">Admin Login</h2>
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
+          <div className="mb-4 flex flex-col space-y-4">
             <input
               type="text"
-              placeholder="Enter your key"
-              value={key}
-              onChange={(e) => setKey(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter your username"
+              value={user}
+              onChange={(e) => setUser(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+            <input
+              type="password"
+              placeholder="Enter your password"
+              value={pass}
+              onChange={(e) => setPass(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
           </div>
           <button

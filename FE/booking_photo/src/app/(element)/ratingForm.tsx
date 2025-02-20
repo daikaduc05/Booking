@@ -21,6 +21,20 @@ import { toast } from "react-toastify";
 import { useParams, useSearchParams } from "next/navigation";
 
 const RatingForm = () => {
+  const[Ip, setIp] = useState<string>("");
+  useEffect(() => {
+    const fetchIp = async () => {
+      try {
+        const response = await fetch("https://api.ipify.org?format=json");
+        const data = await response.json();
+        setIp(data.ip); // Set the fetched IP address
+        console.log(data.ip);
+      } catch (error) {
+        console.error("Error fetching IP address:", error);
+      }
+    };
+    fetchIp();  
+  }, []);
 
   const t = useTranslations("Rating");
   const [hoverRating, setHoverRating] = useState<number>(0);
@@ -45,7 +59,7 @@ const RatingForm = () => {
   }
 
   return (
-    <div className="py-5 h-fit bg-[#5c5a5a] w-full flex flex-col items-center" >
+    <div className="py-5 h-fit bg-[#5c5a5a] w-full flex flex-col items-center">
       <h1 className="text-4xl text-center w-fit h-fit py-10 px-10 text-white">
         {t("title")}
       </h1>
