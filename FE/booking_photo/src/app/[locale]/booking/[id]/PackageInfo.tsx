@@ -1,4 +1,3 @@
-
 import { IPackages } from "@/model/packages";
 import { IProduct } from "@/model/product";
 import React, { useState } from "react";
@@ -34,7 +33,9 @@ const PackageInfo = ({
 }) => {
   const t = useTranslations("PackageInfo");
   const productList = Product.filter(
-    (item) => (item as IProduct & { packageId: number }).packageId === selectPackages?.id
+    (item) =>
+      (item as IProduct & { packageId: number }).packageId ===
+      selectPackages?.id
   );
   const [viewProduct, setViewProduct] = useState<IProduct>(productList[0]);
 
@@ -52,15 +53,7 @@ const PackageInfo = ({
           <div className="flex flex-col justify-center items-start gap-4 w-full sm:w-[45%]">
             <h2 className="text-xl font-semibold">{selectPackages?.name}</h2>
             <p className="text-lg text-gray-600">
-              {t("from")}{" "}
-              {selectPackages
-                ? selectPackages.price % 1000 === 0
-                  ? selectPackages.price / 1000 +
-                    "." +
-                    (selectPackages.price % 1000) +
-                    "00.000đ"
-                  : selectPackages.price + ".000đ"
-                : "No package selected"}
+              {t("from")} {selectPackages?.price.toLocaleString()} VNĐ
             </p>
             <p className="text-sm text-gray-500">
               {selectPackages?.description}

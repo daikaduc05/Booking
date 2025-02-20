@@ -55,7 +55,7 @@ const Explore = () => {
   ];
 
   return (
-    <div className="bg-[#B1B0B0] h-fit py-10">
+    <div className="bg-[#B1B0B0] h-fit pt-5">
       <h1 className="text-4xl text-center w-fit h-fit m-auto py-5 px-10 ">
         {t("title")}
       </h1>
