@@ -18,7 +18,7 @@ public class FormBookingController {
     @Autowired
     private IFormBookingService formBookingService;
 
-    @GetMapping("")
+    @GetMapping("showAll")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<FormBookingShowDTO>> showFormBookings () {
         List<FormBookingShowDTO> formBookingShowDTOList = formBookingService.showFormBookings();
