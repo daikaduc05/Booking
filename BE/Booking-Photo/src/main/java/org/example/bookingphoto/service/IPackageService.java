@@ -2,7 +2,10 @@ package org.example.bookingphoto.service;
 
 import org.example.bookingphoto.dto.PackageCreateDTO;
 import org.example.bookingphoto.dto.PackageEditDTO;
+import org.example.bookingphoto.dto.PackageShowDTO;
 import org.example.bookingphoto.model.Package;
+
+import java.util.List;
 
 public interface IPackageService {
     void create (PackageCreateDTO packageCreateDTO);
@@ -11,9 +14,7 @@ public interface IPackageService {
 
     Package findById (Integer id);
 
-//    void delete(Integer id, Package aPackage) throws Exception;
-
     void delete(Integer id) throws Exception;
-//    void delete (Package aPackage);
+    List<PackageShowDTO> showPackages();
 
 }
