@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,25 +19,28 @@ import {
 import { Input } from "@/components/ui/input";
 import { toast } from "react-toastify";
 import { useParams, useSearchParams } from "next/navigation";
+import axios from "axios";
 
 const RatingForm = () => {
-  const[Ip, setIp] = useState<string>("");
+  
   useEffect(() => {
     const fetchIp = async () => {
       try {
         const response = await fetch("https://api.ipify.org?format=json");
         const data = await response.json();
-        setIp(data.ip); // Set the fetched IP address
+        sessionStorage.setItem("ip", data.ip);
         console.log(data.ip);
       } catch (error) {
         console.error("Error fetching IP address:", error);
       }
     };
-    fetchIp();  
+    fetchIp();
   }, []);
 
   const t = useTranslations("Rating");
   const [hoverRating, setHoverRating] = useState<number>(0);
+ 
+
   const formSchema = z.object({
     email: z.string().email({
       message: t("eMessage"),
@@ -53,9 +56,23 @@ const RatingForm = () => {
       comment: "",
     },
   });
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  const ipUser = sessionStorage.getItem("ip");
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
-    toast.success(t("toastSubmit"));
+    const data = {
+      email: values.email,
+      ratingIndex: values.ratingIndex,
+      content: values.comment,
+      ipUser: ipUser,
+    };
+    const res = await axios.post("https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/ratings/create", data, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (res) {
+      toast.success(t("toastSubmit"));
+    }
   }
 
   return (
