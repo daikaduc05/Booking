@@ -65,7 +65,7 @@ const RatingForm = () => {
       content: values.comment,
       ipUser: ipUser,
     };
-    const res = await axios.post("http://localhost:8080/ratings/create", data, {
+    const res = await axios.post("https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/ratings/create", data, {
       headers: {
         "Content-Type": "application/json",
       },
