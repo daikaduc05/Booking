@@ -20,13 +20,14 @@ import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
+import { headers } from "next/headers";
+import Swal from "sweetalert2";
 
 const formSchema = z
   .object({
     username: z.string().min(2).max(50),
     email: z.string().email(),
     packages: z.string(),
-    location: z.string().refine((value) => value.trim() !== ""),
     note: z.string().max(500).optional(),
     date: z.string().refine(
       (value) => {
@@ -67,7 +68,6 @@ const InfoForm = ({
       username: "",
       email: "",
       packages: selectPackages?.name || "",
-      location: "",
       note: "",
       date: "",
       time: "",
@@ -76,15 +76,31 @@ const InfoForm = ({
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const selectedDateTime = new Date(`${values.date} ${values.time}`);
     const data = {
-      username: values.username,
       email: values.email,
-      packages: values.packages,
-      location: values.location,
-      note: values.note,
+      name: values.username,
       bookTime: selectedDateTime,
+      message: values.note,
     };
-    console.log(data);
-    // const res = await axios("http://localhost:8080/bookings", {});
+    try {
+      const res = await axios.post(`https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/formBookings/create/{packageId}`,data, {
+        headers: {
+          "Content-Type": "application/json",
+        }
+      })
+      if(res){
+        Swal.fire({
+          title:"Đã đặt lịch thành công",
+          icon:"success"
+        })
+      }
+    } catch (error) {
+      Swal.fire({
+        title:"Lỗi",
+        text:"Có lỗi xảy ra khi đặt lịch. Vui lòng thử lại",
+        icon:"error"
+      })
+      console.log(error)
+    }
   }
   const router = useRouter();
   const params = useParams();
@@ -101,9 +117,9 @@ const InfoForm = ({
               name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('name')}</FormLabel>
+                  <FormLabel>{t("name")}</FormLabel>
                   <FormControl>
-                    <Input placeholder={t('pName')} {...field} />
+                    <Input placeholder={t("pName")} {...field} />
                   </FormControl>
                 </FormItem>
               )}
@@ -113,7 +129,7 @@ const InfoForm = ({
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('email')}</FormLabel>
+                  <FormLabel>{t("email")}</FormLabel>
                   <FormControl>
                     <Input placeholder={t("pEmail")} {...field} />
                   </FormControl>
@@ -142,7 +158,7 @@ const InfoForm = ({
               name="date"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('date')}</FormLabel>
+                  <FormLabel>{t("date")}</FormLabel>
 
                   <FormControl>
                     <Input type="date" {...field} />
@@ -155,7 +171,7 @@ const InfoForm = ({
               name="time"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('time')}</FormLabel>
+                  <FormLabel>{t("time")}</FormLabel>
                   <FormControl>
                     <Input type="time" {...field} />
                   </FormControl>
@@ -164,18 +180,6 @@ const InfoForm = ({
               )}
             />
           </div>
-          <FormField
-            control={form.control}
-            name="location"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t('location')}</FormLabel>
-                <FormControl>
-                  <Input placeholder={t("pLocation")} {...field} />
-                </FormControl>
-              </FormItem>
-            )}
-          />
           <FormField
             control={form.control}
             name="note"
@@ -193,7 +197,11 @@ const InfoForm = ({
             )}
           />
           <div className="flex justify-between">
-            <Button onClick={()=>router.push(`/${params.locale}/`)} className="px-7 bg-red-600 hover:bg-red-500" type="reset" >
+            <Button
+              onClick={() => router.push(`/${params.locale}/`)}
+              className="px-7 bg-red-600 hover:bg-red-500"
+              type="reset"
+            >
               {t("reset")}
             </Button>
             <Button

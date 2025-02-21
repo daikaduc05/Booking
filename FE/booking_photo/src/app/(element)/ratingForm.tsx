@@ -18,11 +18,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast } from "react-toastify";
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 
 const RatingForm = () => {
-  
   useEffect(() => {
     const fetchIp = async () => {
       try {
@@ -36,10 +35,9 @@ const RatingForm = () => {
     };
     fetchIp();
   }, []);
-
+  const router = useRouter();
   const t = useTranslations("Rating");
   const [hoverRating, setHoverRating] = useState<number>(0);
- 
 
   const formSchema = z.object({
     email: z.string().email({
@@ -56,22 +54,34 @@ const RatingForm = () => {
       comment: "",
     },
   });
-  const ipUser = sessionStorage.getItem("ip");
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     const data = {
       email: values.email,
       ratingIndex: values.ratingIndex,
       content: values.comment,
-      ipUser: ipUser,
+      ipUser: sessionStorage.getItem("ip"),
     };
-    const res = await axios.post("https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/ratings/create", data, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (res) {
-      toast.success(t("toastSubmit"));
+    try {
+      const res = await axios.post(
+        "https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/ratings/create",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (res) {
+        router.refresh();
+        toast.success(t("toastSubmit"));
+      }
+      else {
+        toast.error(t("toastError"));
+      }
+    } catch (error) {
+      toast.error(t("toastError"));
     }
   }
 

@@ -4,33 +4,39 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
+import { error } from 'console';
 
 const Login = () => {
   const [user,setUser] = useState('');
   const [pass,setPass] = useState('');
   const router = useRouter();
   useEffect(() => {
-    const token = Cookies.get('token');
-    if(token){
+    
+    if(sessionStorage.getItem('token')){
       router.push('/admin');
     }
   },[])
-
+  
   const handleSubmit = async(e :any) => {
+    // debugger;
     e.preventDefault();
     const data = {
-      user: user,
-      pass: pass
+      username: user,
+      password: pass
     }
-    console.log(data);
+    
     try {
-      const res = await axios.post('http://localhost:3000/api/admin/login',data);
-      if(res.data.success){
-        Cookies.set('token',res.data.token);
+      const res = await axios.post('https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/auth/authenticate',data,{
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if(res){
+        sessionStorage.setItem("token", res.data.token);
         router.push('/admin');
       }
       else{
-        toast.error(res.data.message);
+        toast.error('Login failed');
       }
     } catch (error) {
       console.log(error);

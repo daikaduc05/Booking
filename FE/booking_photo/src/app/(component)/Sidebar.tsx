@@ -1,4 +1,5 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
@@ -36,6 +37,11 @@ const Sidebar = () => {
     }
   }, [path]); // Chạy lại mỗi khi đường dẫn thay đổi
 
+  const handleLogout = () => {
+    sessionStorage.removeItem("token");
+    router.push("/admin/login");
+  }
+
   return (
     <div className="flex">
       {!fixed && (
@@ -49,7 +55,7 @@ const Sidebar = () => {
 
       {/* Sidebar */}
       <div
-        className={`fixed top-0 left-0 h-full bg-gray-100 rounded-r-xl p-4 w-fit px-8 flex flex-col items-center transition-transform duration-300 ease-in-out transform ${
+        className={`fixed top-0 left-0 h-full bg-gray-100 rounded-r-xl p-4 w-fit px-8 flex flex-col items-center transition-transform duration-300 ease-in-out transform z-40 ${
           isOpen && !fixed ? "translate-x-0" : "-translate-x-full"
         } ${fixed && "translate-x-0"}`}
       >
@@ -65,11 +71,14 @@ const Sidebar = () => {
               className={`${
                 path.includes(item.url) &&
                 "bg-gray-500 text-white  shadow-lg scale-110"
-              } mb-4 p-2 rounded-lg shadow-md hover:bg-gray-500 hover:text-white hover:translate-x-3 hover:shadow-lg hover:scale-110 duration-300`}
+              } mb-4 p-2 rounded-lg shadow-md hover:bg-gray-500 hover:text-white hover:translate-x-3 hover:shadow-lg hover:scale-110 duration-300 z-50`}
             >
               {item.title}
             </button>
           ))}
+          <Button onClick={()=>handleLogout()} className="bg-red-500 text-white hover:bg-red-400 duration-300">
+            Logout
+          </Button>
         </div>
       </div>
     </div>
