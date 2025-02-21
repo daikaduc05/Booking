@@ -32,7 +32,8 @@
     "submit": "Send",
     "cTitle": "Comment" ,
     "pComment": "Enter your comment",
-    "toastSubmit": "Thank you for your feedback!"
+    "toastSubmit": "Thank you for your feedback!",
+    "toastError": "You have commented today, please try again tomorrow!"
   },
   "Footer": {
     "title": "Contact",

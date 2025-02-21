@@ -6,3 +6,10 @@ export interface IPackages {
   productId: number[];
   description: string;
 }
+
+export interface IPackagesAdmin{
+  packagesId : number;
+  name :string;
+  price : number;
+  description : string; 
+}

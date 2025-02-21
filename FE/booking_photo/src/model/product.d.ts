@@ -3,3 +3,9 @@ export interface IProduct {
     img: string;
     packageId : number;
 }
+export interface IProductShow{
+    id: number;
+    img : string[];
+    packageId : number;
+    title : string;
+}

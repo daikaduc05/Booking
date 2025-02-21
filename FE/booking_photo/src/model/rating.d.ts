@@ -4,3 +4,11 @@ export interface Rating {
     ratingIndex : number;
     comment? : string;
 }
+
+export interface RatingShow {
+    id :number;
+    email : string;
+    ratingIndex : number;
+    content : string;
+    createdAt : Date;
+}
