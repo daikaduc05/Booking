@@ -17,7 +17,7 @@ import {  IPackagesAdmin } from "@/model/packages";
 
 import { useTranslations } from "next-intl";
 import axios from "axios";
-import { useParams, useRouter } from "next/navigation";i
+import { useParams, useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 
 const formSchema = z
