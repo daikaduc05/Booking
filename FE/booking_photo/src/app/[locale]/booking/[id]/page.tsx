@@ -1,16 +1,41 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Packages, { packages } from "@/app/(element)/packages";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import InfoForm from "./InfoForm";
 import PackageInfo from "./PackageInfo";
 import { useTranslations } from "next-intl";
+import { IPackagesAdmin } from "@/model/packages";
+import axios from "axios";
 const page = () => {
   const t = useTranslations("Booking");
   const params = useParams();
-  const selectPackage = packages.find((item) => item.id === Number(params.id));
-  console.log(selectPackage);
   const [language, setLanguage] = useState(params.locale);
+  const [packageList, setPackagesList] = useState<IPackagesAdmin[]>([]);
+  const [selectPackage, setSelectPackage] = useState<IPackagesAdmin>();
+
+  useEffect(() => {
+    const fetchPackages = async () => {
+      try {
+        const res = await axios.get(
+          "https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/packages",
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (res) {
+          console.log(res.data);
+          setPackagesList(res.data);
+        }
+        console.log(packageList);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchPackages();
+  }, []);
+
   return (
     <div className=" flex flex-col justify-center items-center ">
       <div className="flex gap-2 items-center fixed top-0 left-0 p-4">
