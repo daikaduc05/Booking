@@ -37,7 +37,6 @@ public class Rating {
 
     @NotNull
     @Nationalized
-    @Lob
     @Column(name = "content", nullable = false)
     private String content;
 
