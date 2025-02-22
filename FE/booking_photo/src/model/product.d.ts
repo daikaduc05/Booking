@@ -4,8 +4,10 @@ export interface IProduct {
     packageId : number;
 }
 export interface IProductShow{
-    id: number;
-    img : string[];
+    productId : number;
+    image : string;
     packageId : number;
-    title : string;
-}
+    namePackage : string;
+    pricePackage : number;
+    descriptionPackage : string;
+}   

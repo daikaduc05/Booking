@@ -6,6 +6,9 @@ const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
   reactStrictMode: false, // Tắt Strict Mode
+  images: {
+    domains: ["res.cloudinary.com"], // Chỉ định domain cho next/image
+  }
 };
 
 module.exports = withNextIntl(nextConfig);

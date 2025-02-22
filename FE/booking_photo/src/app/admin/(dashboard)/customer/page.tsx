@@ -3,37 +3,49 @@ import React, { useEffect, useState } from "react";
 import BookingList from "./BookingList";
 import { toast } from "react-toastify";
 // import { packages } from "@/app/(element)/packages";
-import { IPackages } from "@/model/packages";
+import { IPackages, IPackagesAdmin } from "@/model/packages";
 import axios from "axios";
+import { IBookingFormShow } from "@/model/bookingForm";
 
 // const packagesList = packages;
 
 const Page = () => {
   const [search, setSearch] = useState("");
   const [packages, setPackage] = useState<string>("");
-  const [packageList, setPackages] = useState<IPackages[]>([]);
+  const [packageList, setPackageList] = useState<IPackagesAdmin[]>([]);
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
-  useEffect(()=>{
+
+  
+  
+  useEffect(() => {
     const fetchPackages = async () => {
       try {
-        const response = await axios.get("https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/packages/showAll");
-        setPackages(response.data);
+        const res = await axios.get(
+          "https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/packages",
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
+            },
+          }
+        );
+        setPackageList(res.data);
+      } catch (error) {
+        console.error(error);
       }
-      catch (error) {
-        console.error("Error fetching packages data:", error);
-      }
-    }
+    };
     fetchPackages();
-  })
+  },[])
   
+
   useEffect(() => {
     if (fromDate && toDate && fromDate > toDate) {
       toast.error("Ngày bắt đầu không thể lớn hơn ngày kết thúc");
       setFromDate("");
       setToDate("");
     }
-    // console.log(search, packages, fromDate, toDate);
+    console.log(search, packages, fromDate, toDate);
   }, [search, packages, fromDate, toDate]);
   return (
     <div className="flex justify-end w-full py-10">
@@ -60,7 +72,7 @@ const Page = () => {
                   <option key={index} value={item.name}>
                     {item.name}
                   </option>
-                )) }
+                ))}
               </select>
             </div>
           </div>

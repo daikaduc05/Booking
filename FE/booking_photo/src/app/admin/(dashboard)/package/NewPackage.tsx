@@ -29,9 +29,13 @@ const formSchema = z.object({
 const NewPackage = ({
   isAdd,
   setAdd,
+  setLoading,
+  loading
 }: {
   isAdd: boolean;
   setAdd: React.Dispatch<React.SetStateAction<boolean>>;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  loading: boolean;
 }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -53,7 +57,7 @@ const NewPackage = ({
         "https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/packages/create", data ,{
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+            "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
           }
         }
       );
@@ -63,7 +67,7 @@ const NewPackage = ({
           icon: "success",
         });
         setAdd(false);
-        router.refresh()
+        setLoading(!loading);
       }
     } catch (error) {
       Swal.fire({

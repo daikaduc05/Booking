@@ -10,7 +10,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { packages } from "@/app/(element)/packages";
 import Swal from "sweetalert2";
 import { IPackages, IPackagesAdmin } from "@/model/packages";
 import { Input } from "@/components/ui/input";
@@ -23,6 +22,7 @@ const title = ["Tên gói", "Giá", "Mô tả"];
 
 const page = () => {
   const [packageItem, setPackageItem] = useState<IPackagesAdmin[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const [name, setName] = useState<string>("");
   const [price, setPrice] = useState<number>(0);
   const [description, setDescription] = useState<string>("");
@@ -33,8 +33,8 @@ const page = () => {
   useEffect(() => {
     const fetchPackages = async () => {
       try {
-        const res = await axios(
-          "https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/formBookings/packages",
+        const res = await axios.get(
+          "https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/packages",
           {
             headers: {
               "Content-Type": "application/json",
@@ -42,16 +42,17 @@ const page = () => {
             },
           }
         );
+        console.log(res.data);
         setPackageItem(res.data);
       } catch (error) {
         console.error(error);
       }
     };
     fetchPackages();
-  }, []);
+  }, [loading]);
 
   const handleEditItem = (id: number) => {
-    const packageToEdit = packageItem.find((item) => item.packagesId === id);
+    const packageToEdit = packageItem.find((item) => item.packageId === id);
     if (packageToEdit) {
       setName(packageToEdit.name);
       setPrice(packageToEdit.price);
@@ -63,18 +64,23 @@ const page = () => {
   const handleSaveEdit = async () => {
     if (editId !== -1) {
       try {
+        const data = {
+          name,
+          price,
+          description,
+        }
         const res = await axios.put(
-          `https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/packages/update/${editId}`,
+          `https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/packages/update/${editId}`,data,
           {
-            header: {
+            headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+              "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
             },
           }
         );
         if (res) {
           const updatedPackagesList = packageItem.map((item) =>
-            item.packagesId === editId
+            item.packageId === editId
               ? { ...item, name, price, description }
               : item
           );
@@ -94,6 +100,7 @@ const page = () => {
           icon: "error",
         });
       }
+      console.log("Edit package", editId);
     } else {
       Swal.fire({
         title:
@@ -117,17 +124,17 @@ const page = () => {
       if (result.isConfirmed) {
         try {
           const res = await axios.delete(
-            `https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/formBookings/delete/${idDelete}`,
+            `https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/packages/delete/${idDelete}`,
             {
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+                "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
               },
             }
           );
           if (res) {
             const newPackagesList = packageItem.filter(
-              (item) => item.packagesId !== idDelete
+              (item) => item.packageId !== idDelete
             );
             setPackageItem(newPackagesList);
             Swal.fire({
@@ -174,7 +181,7 @@ const page = () => {
               <TableBody>
                 {packageItem.map((item, index) => (
                   <TableRow key={index}>
-                    {item.packagesId === editId ? (
+                    {item.packageId === editId ? (
                       <>
                         <TableCell className="w-[130px]">
                           <Input
@@ -207,12 +214,12 @@ const page = () => {
                     )}
                     <TableCell className="flex justify-end gap-2">
                       <Button
-                        onClick={() => handleViewItem(item.packagesId)}
+                        onClick={() => handleViewItem(item.packageId)}
                         className="bg-blue-600 hover:bg-blue-500 duration-300 text-white"
                       >
                         Xem chi tiết
                       </Button>
-                      {item.packagesId === editId ? (
+                      {item.packageId === editId ? (
                         <Button
                           className="bg-green-600 hover:bg-green-500"
                           onClick={handleSaveEdit} // Lưu thông tin khi chỉnh sửa xong
@@ -222,13 +229,13 @@ const page = () => {
                       ) : (
                         <Button
                           className="bg-yellow-500 hover:bg-yellow-400"
-                          onClick={() => handleEditItem(item.packagesId)}
+                          onClick={() => handleEditItem(item.packageId)}
                         >
                           Sửa
                         </Button>
                       )}
                       <Button
-                        onClick={() => handleDeleteItem(item.packagesId)}
+                        onClick={() => handleDeleteItem(item.packageId)}
                         className="bg-red-600 hover:bg-red-500 duration-300 text-white"
                       >
                         Xóa
@@ -250,7 +257,7 @@ const page = () => {
       ) : (
         <div className="w-[83%] flex flex-col mr-10 mt-5 items-center justify-center h-full gap-6">
           <h1 className="text-xl mb-5 font-bold">Nhập thông tin gói mới</h1>
-          <NewPackage isAdd={add} setAdd={setAdd} />
+          <NewPackage isAdd={add} setAdd={setAdd} setLoading={setLoading} loading={loading}/>
         </div>
       )}
     </div>

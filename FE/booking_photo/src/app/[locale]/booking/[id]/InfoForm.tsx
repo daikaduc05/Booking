@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { IPackages } from "@/model/packages";
+import { IPackages, IPackagesAdmin } from "@/model/packages";
 import { toast } from "react-toastify";
 import { useTranslations } from "next-intl";
 import axios from "axios";
@@ -28,6 +28,7 @@ const formSchema = z
     username: z.string().min(2).max(50),
     email: z.string().email(),
     packages: z.string(),
+    location: z.string(),
     note: z.string().max(500).optional(),
     date: z.string().refine(
       (value) => {
@@ -59,7 +60,7 @@ const formSchema = z
 const InfoForm = ({
   selectPackages,
 }: {
-  selectPackages: IPackages | undefined;
+  selectPackages: IPackagesAdmin | undefined;
 }) => {
   const t = useTranslations("InfoForm");
   const form = useForm<z.infer<typeof formSchema>>({
@@ -67,6 +68,7 @@ const InfoForm = ({
     defaultValues: {
       username: "",
       email: "",
+      location: "",
       packages: selectPackages?.name || "",
       note: "",
       date: "",
@@ -80,9 +82,10 @@ const InfoForm = ({
       name: values.username,
       bookTime: selectedDateTime,
       message: values.note,
+      location: "Hà Nội",
     };
     try {
-      const res = await axios.post(`https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/formBookings/create/{packageId}`,data, {
+      const res = await axios.post(`https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/formBookings/create/${selectPackages?.packageId}`,data, {
         headers: {
           "Content-Type": "application/json",
         }
@@ -180,6 +183,18 @@ const InfoForm = ({
               )}
             />
           </div>
+          <FormField
+            control={form.control}
+            name="location"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t("location")}</FormLabel>
+                <FormControl>
+                  <Input placeholder={t("pLocation")} {...field} />
+                </FormControl>
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="note"
