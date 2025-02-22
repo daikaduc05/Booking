@@ -25,7 +25,8 @@ public class RatingService implements IRatingService {
     @Override
     public Rating create(RatingCreateDTO ratingCreateDTO) {
         if (ratingRepository.existsByIpUser(ratingCreateDTO.getIpUser())) {
-            throw new ResponseStatusException (HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException (HttpStatus.BAD_REQUEST,
+                    "Rating already exists with ip " + ratingCreateDTO.getIpUser());    
         }
         Rating rating = new Rating();
         rating.setEmail(ratingCreateDTO.getEmail());

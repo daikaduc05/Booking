@@ -30,14 +30,10 @@ public class RatingController {
 
     @PostMapping("/create")
     public ResponseEntity<?> createRating(@RequestBody RatingCreateDTO ratingCreateDTO) {
-        try {
-            Rating rating = ratingService.create(ratingCreateDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(rating);
-        } catch (RatingAlreadyExistsException ex) {
-            MessageError messageError = new MessageError();
-            messageError.setMessage("You have already rated this photo");
-            return new ResponseEntity<>(messageError, HttpStatus.BAD_REQUEST);
-        }
+        
+        Rating rating = ratingService.create(ratingCreateDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(rating);
+        
     }
 
     @DeleteMapping("/delete/{id}")
