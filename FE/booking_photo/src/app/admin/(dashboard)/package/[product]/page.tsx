@@ -7,7 +7,7 @@ import { IPackages, IPackagesAdmin } from "@/model/packages";
 import axios from "axios";
 import { IProduct } from "@/model/product";
 
-const page = () => {
+const Page = () => {
   const [packages, setPackages] = useState<IPackagesAdmin[]>([]);
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState<IProduct[]>([]);
