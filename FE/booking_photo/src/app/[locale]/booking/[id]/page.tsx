@@ -6,7 +6,7 @@ import PackageInfo from "./PackageInfo";
 import { useTranslations } from "next-intl";
 import { IPackagesAdmin } from "@/model/packages";
 import axios from "axios";
-const page = () => {
+const Page = () => {
   const t = useTranslations("Booking");
   const params = useParams();
   const [language, setLanguage] = useState(params.locale);
