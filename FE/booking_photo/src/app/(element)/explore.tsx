@@ -11,9 +11,10 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { IProductShow } from "@/model/product";
 
+
 const Explore = ({ productShow }: { productShow: IProductShow[] }) => {
   const t = useTranslations("Explore");
-  const [products, setProducts] = useState<IProductShow[]>(productShow);
+
 
   return (
     <div className="bg-[#B1B0B0] h-fit pt-5">
@@ -21,19 +22,19 @@ const Explore = ({ productShow }: { productShow: IProductShow[] }) => {
         {t("title")}
       </h1>
       <div className="pt-10">
-        {products.length === 0 ? (
+        {productShow.length === 0 ? (
           <div className="flex items-center justify-center font-semibold pb-5">Chưa có dữ liệu</div>
         ) : (
           <Carousel className="relative">
             <CarouselContent>
-              {products.map((product, index) => (
+              {productShow.map((product, index) => (
                 <CarouselItem key={index}>
                   <Card className="bg-[#443F3F] h-fit py-16  grid grid-cols-3 ">
                     <div className="col-span-2 grid grid-cols-1 gap-4">
                       <div className="flex gap-2 mx-auto">
-                        {product.img.map((img, index) => (
+                        {productShow.map((product, index) => (
                           <img
-                            src={img}
+                            src={product.image}
                             key={index}
                             className={`object-cover transition-all duration-500 ${
                               index % 2 === 1 ? "mt-14" : "mb-14"
@@ -43,7 +44,7 @@ const Explore = ({ productShow }: { productShow: IProductShow[] }) => {
                       </div>
                     </div>
                     <CardContent className="col-span-1  text-right leading-relaxed flex items-center text-white mr-14">
-                      {product.title}
+                      {product.namePackage}
                     </CardContent>
                   </Card>
                 </CarouselItem>

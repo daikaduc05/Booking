@@ -25,11 +25,11 @@ const page = () => {
     const fetchRating = async () => {
       try {
         const res = await axios.get(
-          "https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/ratings/show",
+          "https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/ratings",
           {
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
             },
           }
         );
@@ -54,17 +54,23 @@ const page = () => {
       cancelButtonText: "Hủy",
       allowOutsideClick: false,
     }).then(async (result) => {
+      console.log("result", id);
       if (result.isConfirmed) {
         try {
           const res = await axios.delete(
-            `https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/ratings/delete/${id}`
+            `https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/ratings/delete/${id}`,{
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+              },
+            }
           );
           if (res) {
             Swal.fire({
               title: "Xóa thành công !",
               icon: "success",
             });
-            setRating(rating.filter((item) => item.id !== id));
+            setRating(rating.filter((item) => item.ratingId !== id));
           }
         } catch (error) {
           console.error(error);
@@ -111,7 +117,7 @@ const page = () => {
                   <TableCell>{item.content}</TableCell>
                   <TableCell>
                     <Button
-                      onClick={() => handleDeleteItem(item.id)}
+                      onClick={() => handleDeleteItem(item.ratingId)}
                       className=" duration-300 text-white bg-red-600 hover:bg-red-500 "
                     >
                       Xóa

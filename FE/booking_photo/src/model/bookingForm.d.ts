@@ -7,16 +7,18 @@ export interface IBookingForm {
     packageId : number;
 }
 
-export interface IBookingFormShow  {
-    id : number;
-    location : string;
-    email : string;
-    name : string;
-    message : string;
-    createdAt : Date;
-    bookingTime : Date;
-    status : boolean;
-    packageId : number;
-    packageName : string;
-    packagePrice : number;
-}
+export interface IBookingFormShow {
+    formBookingId: number;  // ID của booking form
+    location?: string | null;  // Địa chỉ (có thể null hoặc không có)
+    email: string;  // Email của người đặt
+    name: string;  // Tên của người đặt
+    message?: string | null;  // Tin nhắn (có thể null hoặc không có)
+    createAt: Date;  // Thời gian tạo form booking
+    bookTime: Date;  // Thời gian đặt
+    status: boolean;  // Trạng thái (true - đã duyệt, false - chờ duyệt)
+    packageId: number;  // ID của gói
+    packageName: string;  // Tên gói
+    pricePackage: number;  // Giá của gói (số tiền)
+  }
+  
+  

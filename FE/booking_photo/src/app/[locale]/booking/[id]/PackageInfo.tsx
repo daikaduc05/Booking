@@ -1,43 +1,39 @@
-import { IPackages } from "@/model/packages";
+import { IPackages, IPackagesAdmin } from "@/model/packages";
 import { IProduct } from "@/model/product";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
+import axios from "axios";
 
-const Product: IProduct[] = [
-  {
-    id: 1,
-    img: "https://i.pinimg.com/474x/f8/27/56/f82756c02fe36e091bcca8c41c39b05a.jpg",
-    packageId: 1,
-  },
-  {
-    id: 2,
-    img: "https://i.pinimg.com/474x/02/6d/50/026d50c426b1c334ba46c0f2ba1ac843.jpg",
-    packageId: 1,
-  },
-  {
-    id: 3,
-    img: "https://i.pinimg.com/474x/4f/db/35/4fdb3534e6200b0a1a8309f12de7d9e9.jpg",
-    packageId: 1,
-  },
-  {
-    id: 4,
-    img: "https://i.pinimg.com/474x/8f/89/05/8f890560d2a8fa410613af2e6b427128.jpg",
-    packageId: 1,
-  },
-];
+
 
 const PackageInfo = ({
   selectPackages,
 }: {
-  selectPackages: IPackages | undefined;
+  selectPackages: IPackagesAdmin | undefined;
 }) => {
   const t = useTranslations("PackageInfo");
-  const productList = Product.filter(
-    (item) =>
-      (item as IProduct & { packageId: number }).packageId ===
-      selectPackages?.id
-  );
+  const [productList, setProductList] = useState<IProduct[]>([]);
   const [viewProduct, setViewProduct] = useState<IProduct>(productList[0]);
+  // useEffect(() => {
+  //   const fetchProducts = async () => {
+  //     try {
+  //       const res = await axios.get(
+  //         `https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/products/${selectPackages?.packageId}`,{
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           }
+  //         }
+  //       );
+  //       if (res) {
+  //         setProductList(res.data);
+  //         setViewProduct(res.data[0]);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
+  //   fetchProducts();
+  // },[])
 
   return (
     <div className="flex flex-col items-center justify-start h-fit  px-4 sm:px-6 lg:px-8">

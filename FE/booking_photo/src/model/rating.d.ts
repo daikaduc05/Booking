@@ -6,9 +6,10 @@ export interface Rating {
 }
 
 export interface RatingShow {
-    id :number;
+    ratingId :number;
     email : string;
     ratingIndex : number;
     content : string;
     createdAt : Date;
+    ipUser : string;
 }

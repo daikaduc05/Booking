@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -12,10 +11,10 @@ import { Button } from "@/components/ui/button";
 import { IBookingFormShow } from "@/model/bookingForm";
 import Swal from "sweetalert2";
 import axios from "axios";
-import { headers } from "next/headers";
 
 const title = [
   "Tên",
+  "Email",
   "Ngày",
   "Giờ",
   "Gói",
@@ -48,25 +47,45 @@ const BookingList = ({
   };
 
   const [bookingList, setBookingList] = useState<IBookingFormShow[]>([]);
-  // const [loading, setLoading] = useState<boolean>(true);
+  const [filteredBookings, setFilteredBookings] = useState<IBookingFormShow[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  // Fetch data from API only once
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchBookingList = async () => {
+      setLoading(true);
       try {
-        const response = await axios.get(
-          "https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/formBookings/showAll"
+        const res = await axios.get(
+          "https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/formBookings",
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+            },
+          }
         );
-        setBookingList(response.data);
+        
+        const bookingData: IBookingFormShow[] = res.data.map((item: any) => ({
+          ...item,
+          createAt: new Date(item.createAt),
+          bookTime: new Date(item.bookTime),
+        }));
+        setBookingList(bookingData);
+        setFilteredBookings(bookingData); 
       } catch (error) {
         console.error("Error fetching booking data:", error);
+      } finally {
+        setLoading(false);
       }
     };
-    fetchData();
-  });
 
+    fetchBookingList();
+  }, []); 
+
+ 
   useEffect(() => {
-    let filteredList = bookingList;
-
-    // Filter by search
+    let filteredList = [...bookingList];
+  
     if (search) {
       filteredList = filteredList.filter((item) =>
         removeAccents(item.name)
@@ -75,24 +94,31 @@ const BookingList = ({
       );
     }
 
-    // Filter by packageName
+    
     if (packageName) {
       filteredList = filteredList.filter(
         (item) => item.packageName === packageName
       );
     }
 
-    // Filter by date range
+    
     if (fromDate && toDate) {
-      filteredList = filteredList.filter(
-        (item) =>
-          item.bookingTime >= new Date(fromDate) &&
-          item.bookingTime <= new Date(toDate)
-      );
+      // Chuyển đổi fromDate và toDate từ chuỗi sang đối tượng Date
+      const fromDateObj = new Date(fromDate);
+      const toDateObj = new Date(toDate);
+    
+      // Kiểm tra nếu từ API trả về chuỗi ngày tháng, cần phải chuyển đổi đối tượng Date
+      filteredList = filteredList.filter((item) => {
+        // Đảm bảo rằng item.bookTime được chuyển thành đối tượng Date đúng cách
+        const bookTime = new Date(item.bookTime);  // Chuyển đổi item.bookTime thành đối tượng Date
+    
+        // So sánh bookTime với từ và đến ngày
+        return bookTime.getDate() >= fromDateObj.getDate() && bookTime.getDate() <= toDateObj.getDate();
+      });
     }
 
-    setBookingList(filteredList);
-  }, [search, packageName, fromDate, toDate]);
+    setFilteredBookings(filteredList);
+  }, [search, packageName, fromDate, toDate, bookingList]);
 
   const formatDate = (date: Date): string => {
     return date.toLocaleDateString("vi-VN");
@@ -108,12 +134,12 @@ const BookingList = ({
 
   const handleChangeStatus = async (id: number) => {
     Swal.fire({
-      title: `Bạn chắc chắn sẽ duyệt, bạn sẽ không thể hoàn tác?`,
+      title: "Bạn chắc chắn sẽ duyệt, bạn sẽ không thể hoàn tác?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: `duyệt`,
+      confirmButtonText: "Duyệt",
       cancelButtonText: "Hủy",
       allowOutsideClick: false,
     }).then(async (result) => {
@@ -121,6 +147,7 @@ const BookingList = ({
         try {
           const res = await axios.put(
             `https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/formBookings/approve/${id}`,
+            {},
             {
               headers: {
                 "Content-Type": "application/json",
@@ -131,7 +158,7 @@ const BookingList = ({
 
           if (res) {
             const updatedBookingList = bookingList.map((item) =>
-              item.id === id ? { ...item, status: true } : item
+              item.formBookingId === id ? { ...item, status: true } : item
             );
             setBookingList(updatedBookingList);
             Swal.fire({
@@ -165,7 +192,7 @@ const BookingList = ({
       if (result.isConfirmed) {
         try {
           const res = await axios.delete(
-            `http://localhost:8080/formBookings/delete/${idDelete}`,
+            `https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/formBookings/delete/${idDelete}`,
             {
               headers: {
                 "Content-Type": "application/json",
@@ -175,7 +202,7 @@ const BookingList = ({
           );
           if (res) {
             const newBookingList = bookingList.filter(
-              (item) => item.id !== idDelete
+              (item) => item.formBookingId !== idDelete
             );
             setBookingList(newBookingList);
             Swal.fire({
@@ -197,9 +224,13 @@ const BookingList = ({
 
   return (
     <div>
-      {bookingList.length === 0 ? (
+      {loading ? (
         <div className="w-full h-[300px] font-semibold text-xl flex items-center justify-center">
-          Chưa có lịch đặt nào !
+          Đang tải dữ liệu...
+        </div>
+      ) : bookingList.length === 0 ? (
+        <div className="w-full h-[300px] font-semibold text-xl flex items-center justify-center">
+          Chưa có lịch đặt nào!
         </div>
       ) : (
         <Table>
@@ -211,14 +242,15 @@ const BookingList = ({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {bookingList.map((item, index) => (
+            {filteredBookings.map((item, index) => (
               <TableRow key={index}>
                 <TableCell>{item.name}</TableCell>
-                <TableCell>{formatDate(item.bookingTime)}</TableCell>
-                <TableCell>{formatTime(item.bookingTime)}</TableCell>
+                <TableCell>{item.email}</TableCell>
+                <TableCell>{formatDate(item.bookTime)}</TableCell>
+                <TableCell>{formatTime(item.bookTime)}</TableCell>
                 <TableCell>{item.packageName}</TableCell>
-                <TableCell>{item.location}</TableCell>
-                <TableCell>{formatPrice(item.packagePrice)} VNĐ</TableCell>
+                <TableCell>{item.location || "Chưa có địa chỉ"}</TableCell>
+                <TableCell>{formatPrice(item.pricePackage)} VNĐ</TableCell>
                 <TableCell
                   className={`${
                     item.status ? "text-green-500" : "text-yellow-500"
@@ -226,23 +258,21 @@ const BookingList = ({
                 >
                   {item.status ? "Đã duyệt" : "Chờ duyệt"}
                 </TableCell>
-                <TableCell className="flex items-center justify-start gap-2 ">
+                <TableCell className="flex items-center justify-start gap-2">
                   <Button
-                    onClick={() => handleDeleteItem(item.id)}
+                    onClick={() => handleDeleteItem(item.formBookingId)}
                     className="bg-red-600 hover:bg-red-500 duration-300 text-white"
                   >
                     Xóa
                   </Button>
                   {item.status === false ? (
                     <Button
-                      onClick={() => handleChangeStatus(item.id)}
+                      onClick={() => handleChangeStatus(item.formBookingId)}
                       className="bg-green-500 hover:bg-green-400 duration-300 text-white"
                     >
                       Duyệt
                     </Button>
-                  ) : (
-                    <></>
-                  )}
+                  ) : null}
                 </TableCell>
               </TableRow>
             ))}
