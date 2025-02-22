@@ -20,7 +20,7 @@ import axios from "axios";
 
 const title = ["Tên gói", "Giá", "Mô tả"];
 
-const Page = () => {
+const page = () => {
   const [packageItem, setPackageItem] = useState<IPackagesAdmin[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [name, setName] = useState<string>("");
