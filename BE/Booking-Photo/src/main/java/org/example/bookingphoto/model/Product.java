@@ -24,7 +24,6 @@ public class Product {
     private String image;
 
     @Nationalized
-    @Lob
     @Column(name = "content")
     private String content;
 

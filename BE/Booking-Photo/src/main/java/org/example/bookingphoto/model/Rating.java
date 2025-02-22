@@ -42,7 +42,6 @@ public class Rating {
 
     @NotNull
     @Nationalized
-    @Lob
     @Column(name = "create_at", nullable = false)
     private LocalDateTime createAt;
 
