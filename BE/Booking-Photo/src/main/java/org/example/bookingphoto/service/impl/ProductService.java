@@ -29,7 +29,7 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public void create(Integer packageId, ProductCreateDTO productCreateDTO) {
+    public Product create(Integer packageId, ProductCreateDTO productCreateDTO) {
         Package aPackage = packageRepository.findById(packageId).orElse(null);
         if (aPackage == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Package not found with id " + packageId);
@@ -37,7 +37,7 @@ public class ProductService implements IProductService {
         Product newProduct = new Product();
         newProduct.setPackageField(aPackage);
         newProduct.setImage(productCreateDTO.getImage());
-        productRepository.save(newProduct);
+        return productRepository.save(newProduct);
     }
     @Override
     public Product update(Integer packageId, Integer productId, ProductEditDTO productEditDTO) {
@@ -68,5 +68,10 @@ public class ProductService implements IProductService {
         }
         Product product = optionalProduct.get();
         productRepository.delete(product);
+    }
+
+    @Override
+    public List<ProductShowDTO> showProducts() {
+        return productRepository.showProducts();
     }
 }

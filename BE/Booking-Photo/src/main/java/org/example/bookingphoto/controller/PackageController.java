@@ -29,8 +29,8 @@ public class PackageController {
     @PostMapping("create")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> create (@RequestBody PackageCreateDTO packageCreateDTO) {
-        packageService.create(packageCreateDTO);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        Package pkg = packageService.create(packageCreateDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(pkg);
     }
     @PutMapping("/update/{id}")
     @PreAuthorize("hasRole('ADMIN')")

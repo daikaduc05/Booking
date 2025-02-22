@@ -15,7 +15,7 @@ const page = () => {
   }, []);
   const router = useRouter();
   useEffect(() => {
-    if (!Cookies.get("token")) {
+    if (!sessionStorage.getItem("token")) {
       router.push("/admin/login");
     }
   }, []);
@@ -30,7 +30,7 @@ const page = () => {
             key={index}
             className={`inline-block leading-[100px] overflow-hidden animate-text-reveal`}
             style={{
-              animationDelay: `${index * 0.05}s`, // Vẫn cần phải sử dụng animation delay
+              animationDelay: `${index * 0.05}s`, 
             }}
           >
             {char === " " ? "\u00A0" : char}

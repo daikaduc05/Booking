@@ -2,16 +2,30 @@
 import React, { useEffect, useState } from "react";
 import BookingList from "./BookingList";
 import { toast } from "react-toastify";
-import { packages } from "@/app/(element)/packages";
+// import { packages } from "@/app/(element)/packages";
 import { IPackages } from "@/model/packages";
+import axios from "axios";
 
-const packagesList = packages;
+// const packagesList = packages;
 
 const Page = () => {
   const [search, setSearch] = useState("");
   const [packages, setPackage] = useState<string>("");
+  const [packageList, setPackages] = useState<IPackages[]>([]);
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
+  useEffect(()=>{
+    const fetchPackages = async () => {
+      try {
+        const response = await axios.get("https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/packages/showAll");
+        setPackages(response.data);
+      }
+      catch (error) {
+        console.error("Error fetching packages data:", error);
+      }
+    }
+    fetchPackages();
+  })
   
   useEffect(() => {
     if (fromDate && toDate && fromDate > toDate) {
@@ -42,7 +56,7 @@ const Page = () => {
                 className="w-fit rounded-xl h-12 px-4  focus:outline-none"
               >
                 <option value="">Tất cả gói dịch vụ</option>
-                {packagesList.map((item, index) => (
+                {packageList.map((item, index) => (
                   <option key={index} value={item.name}>
                     {item.name}
                   </option>

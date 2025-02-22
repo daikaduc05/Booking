@@ -1,3 +1,4 @@
+"use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -13,8 +14,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
@@ -40,9 +42,36 @@ const NewPackage = ({
     },
   });
   const router = useRouter();
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    toast.success("Thêm gói dịch vụ thành công !");
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const data = {
+      name: values.name,
+      price: values.price,
+      description: values.description,
+    };
+    try {
+      const res = await axios.post(
+        "https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/packages/create", data ,{
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+          }
+        }
+      );
+      if(res){
+        Swal.fire({
+          title: "Thêm gói dịch vụ mới thành công !",
+          icon: "success",
+        });
+        setAdd(false);
+        router.refresh()
+      }
+    } catch (error) {
+      Swal.fire({
+        title: "Không thể thêm gói dịch vụ mới!",
+        icon: "error",
+      })
+      console.error(error);
+    }
   }
   return (
     <div className="w-[500px] bg-white p-10 rounded-xl  shadow-lg">
@@ -110,7 +139,10 @@ const NewPackage = ({
           </Button>
         </form>
       </Form>
-      <Button onClick={()=>setAdd(false)} className="bg-gray-500 hover:bg-gray-400 w-[70px] fixed bottom-4 right-4 h-[40px]">
+      <Button
+        onClick={() => setAdd(false)}
+        className="bg-gray-500 hover:bg-gray-400 w-[70px] fixed bottom-4 right-4 h-[40px]"
+      >
         Trở lại
       </Button>
     </div>

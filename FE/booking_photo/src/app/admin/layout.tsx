@@ -13,9 +13,9 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const path = usePathname();
+  const isLogin = sessionStorage.getItem("token")
   console.log(path);
-  const cookies = Cookies.get("token");
-  if (!cookies && !path.includes("login")) {
+  if (!isLogin&&!path.includes("login")) {
     window.location.href = "/admin/login";
   }
   return (

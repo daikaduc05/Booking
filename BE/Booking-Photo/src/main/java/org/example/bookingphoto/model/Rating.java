@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Nationalized;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @Entity
@@ -27,10 +29,22 @@ public class Rating {
     @Column(name = "email", nullable = false)
     private String email;
 
+    @Size(max = 255)
+    @NotNull
+    @Nationalized
+    @Column(name = "ip_user", nullable = false)
+    private String ipUser;
+
     @NotNull
     @Nationalized
     @Lob
     @Column(name = "content", nullable = false)
     private String content;
+
+    @NotNull
+    @Nationalized
+    @Lob
+    @Column(name = "create_at", nullable = false)
+    private LocalDateTime createAt;
 
 }
