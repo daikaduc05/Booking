@@ -43,7 +43,7 @@ public class RatingController {
     @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Rating> delete (@PathVariable("id") Integer id) {
-        Rating rating = ratingService.delete(id);
+        ratingService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
