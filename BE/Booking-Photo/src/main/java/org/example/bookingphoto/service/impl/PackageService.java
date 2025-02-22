@@ -14,6 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -22,12 +23,12 @@ public class PackageService implements IPackageService {
     private IPackageRepository packageRepository;
 
     @Override
-    public void create (PackageCreateDTO packageCreateDTO) {
+    public Package create (PackageCreateDTO packageCreateDTO) {
         Package newPackage = new Package();
         newPackage.setName(packageCreateDTO.getName());
         newPackage.setPrice(packageCreateDTO.getPrice());
         newPackage.setDescription(packageCreateDTO.getDescription());
-        packageRepository.save(newPackage);
+        return packageRepository.save(newPackage);
     }
 
     @Override
@@ -41,11 +42,6 @@ public class PackageService implements IPackageService {
         editPackage.setDescription(packageEditDTO.getDescription());
         editPackage.setPrice(packageEditDTO.getPrice());
         return packageRepository.save(editPackage);
-    }
-
-    @Override
-    public Package findById(Integer id) {
-        return packageRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -63,4 +59,5 @@ public class PackageService implements IPackageService {
     public List<PackageShowDTO> showPackages() {
         return packageRepository.showPackages();
     }
+
 }

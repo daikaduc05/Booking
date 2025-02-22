@@ -34,15 +34,15 @@ public class ProductController {
     @PostMapping("/create/{packageId}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> create (@PathVariable("packageId") Integer packageId, @RequestBody ProductCreateDTO productCreateDTO) {
-        productService.create(packageId, productCreateDTO);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        Product product = productService.create(packageId, productCreateDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(product);
     }
 
     @PutMapping("/update/{packageId}/{productId}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Product> update (@PathVariable("packageId") Integer packageId, @PathVariable("productId") Integer productId, @RequestBody ProductEditDTO productEditDTO) {
         Product updateProduct = productService.update(packageId, productId, productEditDTO);
-        return new ResponseEntity<>(updateProduct, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(updateProduct);
     }
 
     @DeleteMapping("/delete/{packageId}/{productId}")

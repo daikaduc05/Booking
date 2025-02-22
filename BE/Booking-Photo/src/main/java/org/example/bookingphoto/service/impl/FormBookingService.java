@@ -1,5 +1,6 @@
 package org.example.bookingphoto.service.impl;
 
+import org.example.bookingphoto.dto.FormBookingApproveDTO;
 import org.example.bookingphoto.dto.FormBookingCreateDTO;
 import org.example.bookingphoto.dto.FormBookingShowDTO;
 import org.example.bookingphoto.model.FormBooking;
@@ -24,7 +25,7 @@ public class FormBookingService implements IFormBookingService {
     private IPackageRepository packageRepository;
 
     @Override
-    public void create(Integer packageId, FormBookingCreateDTO formBookingCreateDTO) {
+    public FormBooking create(Integer packageId, FormBookingCreateDTO formBookingCreateDTO) {
         Package aPackage = packageRepository.findById(packageId).orElse(null);
         if (aPackage == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Package not found with id " + packageId);
@@ -38,7 +39,7 @@ public class FormBookingService implements IFormBookingService {
         formBooking.setBookTime(formBookingCreateDTO.getBookTime());
         formBooking.setStatus(false);
         formBooking.setMessage(formBookingCreateDTO.getMessage());
-        formBookingRepository.save(formBooking);
+        return formBookingRepository.save(formBooking);
     }
 
     @Override
@@ -47,18 +48,19 @@ public class FormBookingService implements IFormBookingService {
     }
 
     @Override
-    public FormBooking findById(Integer id) {
-        return formBookingRepository.findById(id).orElse(null);
-    }
-
-    @Override
-    public void approveFormBooking(Integer formBookingId) {
+    public FormBookingApproveDTO approveFormBooking(Integer formBookingId) {
         FormBooking formBooking = formBookingRepository.findById(formBookingId).orElse(null);
         if (formBooking == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Package not found with id " + formBookingId);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "FormBooking not found with id " + formBookingId);
         }
         formBooking.setStatus(true);
-        formBookingRepository.save(formBooking);
+        FormBooking approveFormBooking = formBookingRepository.save(formBooking);
+        return convertToDto(approveFormBooking);
+    }
+    private FormBookingApproveDTO convertToDto(FormBooking formBooking) {
+        FormBookingApproveDTO dto = new FormBookingApproveDTO();
+        dto.setStatus(formBooking.getStatus());
+        return dto;
     }
     @Override
     public void delete(Integer formBookingId) {
