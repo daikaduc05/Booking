@@ -36,7 +36,7 @@ public class RatingController {
         } catch (RatingAlreadyExistsException ex) {
             MessageError messageError = new MessageError();
             messageError.setMessage("You have already rated this photo");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(messageError);
+            return new ResponseEntity<>(messageError, HttpStatus.BAD_REQUEST);
         }
     }
 
