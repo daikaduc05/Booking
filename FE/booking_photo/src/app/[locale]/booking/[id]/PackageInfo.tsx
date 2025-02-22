@@ -1,8 +1,8 @@
-import { IPackages, IPackagesAdmin } from "@/model/packages";
+import {  IPackagesAdmin } from "@/model/packages";
 import { IProduct } from "@/model/product";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useTranslations } from "next-intl";
-import axios from "axios";
+
 
 
 
@@ -12,7 +12,7 @@ const PackageInfo = ({
   selectPackages: IPackagesAdmin | undefined;
 }) => {
   const t = useTranslations("PackageInfo");
-  const [productList, setProductList] = useState<IProduct[]>([]);
+  const [productList] = useState<IProduct[]>([]);
   const [viewProduct, setViewProduct] = useState<IProduct>(productList[0]);
   // useEffect(() => {
   //   const fetchProducts = async () => {

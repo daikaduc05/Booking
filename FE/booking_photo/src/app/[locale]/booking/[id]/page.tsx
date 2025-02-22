@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useParams} from "next/navigation";
 import InfoForm from "./InfoForm";
 import PackageInfo from "./PackageInfo";
 import { useTranslations } from "next-intl";
@@ -11,7 +11,7 @@ const Page = () => {
   const params = useParams();
   const [language, setLanguage] = useState(params.locale);
   const [packageList, setPackagesList] = useState<IPackagesAdmin[]>([]);
-  const [selectPackage, setSelectPackage] = useState<IPackagesAdmin>();
+  const [selectPackage] = useState<IPackagesAdmin>();
 
   useEffect(() => {
     const fetchPackages = async () => {
