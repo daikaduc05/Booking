@@ -2,13 +2,15 @@ package org.example.bookingphoto.service.impl;
 
 import org.example.bookingphoto.dto.RatingCreateDTO;
 import org.example.bookingphoto.dto.RatingShowDTO;
+import org.example.bookingphoto.exception.MessageError;
+import org.example.bookingphoto.exception.RatingAlreadyExistsException;
 import org.example.bookingphoto.model.Rating;
 import org.example.bookingphoto.repository.IRatingRepository;
 import org.example.bookingphoto.service.IRatingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
@@ -21,14 +23,17 @@ public class RatingService implements IRatingService {
     private IRatingRepository ratingRepository;
 
     @Override
-    public void create(RatingCreateDTO ratingCreateDTO, String ipUser) {
+    public Rating create(RatingCreateDTO ratingCreateDTO) {
+        if (ratingRepository.existsByIpUser(ratingCreateDTO.getIpUser())) {
+            throw new ResponseStatusException (HttpStatus.BAD_REQUEST);
+        }
         Rating rating = new Rating();
         rating.setEmail(ratingCreateDTO.getEmail());
         rating.setRatingIndex(ratingCreateDTO.getRatingIndex());
         rating.setContent(ratingCreateDTO.getContent());
         rating.setCreateAt(LocalDateTime.now());
-        rating.setIpUser(ipUser);
-        ratingRepository.save(rating);
+        rating.setIpUser(ratingCreateDTO.getIpUser());
+        return ratingRepository.save(rating);
     }
 
     @Override

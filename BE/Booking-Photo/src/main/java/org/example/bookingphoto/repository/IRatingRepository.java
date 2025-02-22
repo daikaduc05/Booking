@@ -10,4 +10,6 @@ import java.util.List;
 public interface IRatingRepository extends JpaRepository<Rating, Integer> {
     @Query(value = "SELECT new org.example.bookingphoto.dto.RatingShowDTO(r.id, r.email, r.ratingIndex, r.content, r.createAt, r.ipUser) from Rating as r")
     List<RatingShowDTO> showRatings();
+
+    boolean existsByIpUser(String ipUser);
 }

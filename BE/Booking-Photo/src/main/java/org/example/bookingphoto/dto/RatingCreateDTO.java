@@ -18,4 +18,5 @@ public class RatingCreateDTO {
     private String email;
     private Integer ratingIndex;
     private String content;
+    private String ipUser;
 }
