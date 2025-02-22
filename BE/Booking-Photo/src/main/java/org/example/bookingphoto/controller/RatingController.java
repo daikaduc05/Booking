@@ -22,7 +22,7 @@ public class RatingController {
     @Autowired
     private IRatingService ratingService;
 
-    @GetMapping("/show")
+    @GetMapping("")
     public ResponseEntity<List<RatingShowDTO>> showRatings () {
         List<RatingShowDTO> ratingShowDTOList = ratingService.showRatings();
         return new ResponseEntity<>(ratingShowDTOList, HttpStatus.OK);
