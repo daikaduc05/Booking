@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/formBookings")
+@CrossOrigin("*")
 public class FormBookingController {
     @Autowired
     private IFormBookingService formBookingService;
