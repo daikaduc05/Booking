@@ -32,7 +32,8 @@
     "submit": "Gửi",
     "cTitle": "Bình luận",
     "pComment": "Nhập bình luận của bạn",
-    "toastSubmit": "Cảm ơn bạn đã phản hồi!"
+    "toastSubmit": "Cảm ơn bạn đã phản hồi!",
+    "toastError": "Bạn đã bình luận hôm nay, vui lòng thử lại ngày mai!"
   },
   "Footer": {
    "title": "Thông tin liên hệ",

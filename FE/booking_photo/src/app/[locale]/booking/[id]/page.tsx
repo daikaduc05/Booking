@@ -25,7 +25,7 @@ const page = () => {
         <select
           value={language}
           onChange={(e) => setLanguage(e.target.value)}
-          className=" text-black bg-white border-none outline-none transition-all ease-in-out cursor-pointer duration-300 hover:text-[#cfcece]"
+          className=" text-black bg-white border-none outline-none transition-all ease-in-out cursor-pointer duration-300 hover:text-[#212020]"
         >
           <option value="vn">VN</option>
           <option value="en">EN</option>
