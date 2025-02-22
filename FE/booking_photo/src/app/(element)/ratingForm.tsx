@@ -21,23 +21,27 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 
 const RatingForm = () => {
+  const router = useRouter();
+  const t = useTranslations("Rating");
+  const [hoverRating, setHoverRating] = useState(0);
+
+  // Fetch IP chỉ khi chưa có trong sessionStorage
   useEffect(() => {
     const fetchIp = async () => {
-      try {
-        const response = await fetch("https://api.ipify.org?format=json");
-        const data = await response.json();
-        sessionStorage.setItem("ip", data.ip);
-        console.log(data.ip);
-      } catch (error) {
-        console.error("Error fetching IP address:", error);
+      if (!sessionStorage.getItem("ip")) {
+        try {
+          const response = await fetch("https://api.ipify.org?format=json");
+          const data = await response.json();
+          sessionStorage.setItem("ip", data.ip);
+        } catch (error) {
+          console.error("Error fetching IP address:", error);
+        }
       }
     };
     fetchIp();
   }, []);
-  const router = useRouter();
-  const t = useTranslations("Rating");
-  const [hoverRating, setHoverRating] = useState<number>(0);
 
+  // Schema validation
   const formSchema = z.object({
     email: z.string().email({
       message: t("eMessage"),
@@ -45,6 +49,7 @@ const RatingForm = () => {
     ratingIndex: z.number().min(1).max(5),
     comment: z.string().optional(),
   });
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -54,32 +59,32 @@ const RatingForm = () => {
     },
   });
 
+  // Submit Form
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
     const data = {
       email: values.email,
       ratingIndex: values.ratingIndex,
       content: values.comment,
       ipUser: sessionStorage.getItem("ip"),
     };
+
     try {
       const res = await axios.post(
         "https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/ratings/create",
         data,
         {
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
         }
       );
-      if (res) {
+
+      if (res.status === 200 || res.status === 201) {
         router.refresh();
         toast.success(t("toastSubmit"));
-      }
-      else {
+      } else {
         toast.error(t("toastError"));
       }
     } catch (error) {
+      console.error("API Error:", error);
       toast.error(t("toastError"));
     }
   }
@@ -93,8 +98,9 @@ const RatingForm = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-8 h-fit py-10  px-5 w-[40%] rounded-lg bg-white"
+          className="space-y-8 h-fit py-10 px-5 w-[40%] rounded-lg bg-white"
         >
+          {/* Email Field */}
           <FormField
             control={form.control}
             name="email"
@@ -108,20 +114,22 @@ const RatingForm = () => {
               </FormItem>
             )}
           />
+
+          {/* Rating Field */}
           <FormField
             control={form.control}
             name="ratingIndex"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <div className="flex pl-2 mb-10  space-x-2 size-4">
+                  <div className="flex pl-2 mb-10 space-x-2 size-4">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <div
                         key={star}
                         onMouseEnter={() => setHoverRating(star)}
                         onMouseLeave={() => setHoverRating(0)}
                         onClick={() => field.onChange(star)}
-                        className="cursor-pointer text-xl text-yellow-500 "
+                        className="cursor-pointer text-xl text-yellow-500"
                       >
                         {hoverRating >= star || Number(field.value) >= star ? (
                           <AiFillStar />
@@ -136,6 +144,8 @@ const RatingForm = () => {
               </FormItem>
             )}
           />
+
+          {/* Comment Field */}
           <FormField
             control={form.control}
             name="comment"
@@ -147,14 +157,16 @@ const RatingForm = () => {
                     className="resize-none h-[250px] outline-none p-4 text-lg placeholder-gray-500 w-full"
                     placeholder={t("pComment")}
                     value={field.value}
-                    onChange={(e) => field.onChange(e)}
+                    onChange={(e) => field.onChange(e.target.value)}
                   />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <div className=" flex justify-end">
+
+          {/* Submit Button */}
+          <div className="flex justify-end">
             <Button className="w-fit px-10 rounded-2xl" type="submit">
               {t("submit")}
             </Button>
