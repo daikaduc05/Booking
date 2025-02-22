@@ -44,6 +44,6 @@ public class RatingController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Rating> delete (@PathVariable("id") Integer id) {
         Rating rating = ratingService.delete(id);
-        return new ResponseEntity<>(rating, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
