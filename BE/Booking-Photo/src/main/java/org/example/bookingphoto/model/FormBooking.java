@@ -1,5 +1,6 @@
 package org.example.bookingphoto.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "form_bookings")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class FormBooking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

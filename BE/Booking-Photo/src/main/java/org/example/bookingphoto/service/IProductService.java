@@ -12,7 +12,7 @@ import java.util.List;
 public interface IProductService {
     List<ProductShowDTO> showProductByPackage(Integer packageId);
 
-    void create (Integer packageId, ProductCreateDTO productCreateDTO);
+    Product create (Integer packageId, ProductCreateDTO productCreateDTO);
 
 
     Product update(Integer packageId, Integer productId, ProductEditDTO productEditDTO);

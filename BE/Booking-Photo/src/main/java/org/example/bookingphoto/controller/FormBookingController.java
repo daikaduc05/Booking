@@ -1,5 +1,6 @@
 package org.example.bookingphoto.controller;
 
+import org.example.bookingphoto.dto.FormBookingApproveDTO;
 import org.example.bookingphoto.dto.FormBookingCreateDTO;
 import org.example.bookingphoto.dto.FormBookingShowDTO;
 import org.example.bookingphoto.model.FormBooking;
@@ -27,15 +28,15 @@ public class FormBookingController {
 
     @PostMapping("/create/{packageId}")
     public ResponseEntity<?> create (@PathVariable("packageId") Integer packageId, @RequestBody FormBookingCreateDTO formBookingCreateDTO) {
-        formBookingService.create(packageId, formBookingCreateDTO);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        FormBooking formBooking = formBookingService.create(packageId, formBookingCreateDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(formBooking);
     }
 
     @PutMapping("/approve/{formBookingId}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<FormBooking> approveFormBooking (@PathVariable("formBookingId") Integer formBookingId) {
-        formBookingService.approveFormBooking(formBookingId);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<FormBookingApproveDTO> approveFormBooking (@PathVariable("formBookingId") Integer formBookingId) {
+        FormBookingApproveDTO formBookingApproveDTO = formBookingService.approveFormBooking(formBookingId);
+        return ResponseEntity.status(HttpStatus.OK).body(formBookingApproveDTO);
     }
 
     @DeleteMapping("/delete/{formBookingId}")
