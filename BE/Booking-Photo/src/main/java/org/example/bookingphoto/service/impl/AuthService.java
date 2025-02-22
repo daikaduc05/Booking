@@ -75,7 +75,7 @@ public class AuthService implements IAuthService {
                 .issuer("vhh.com") // Đặt người phát hành JWT là "sqc.com"
                 .issueTime(new Date()) // Đặt thời gian phát hành JWT là thời điểm hiện tại
                 .expirationTime(new Date( // Đặt thời gian hết hạn cho JWT là 1 giờ kể từ lúc phát hành
-                        Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()
+                        Instant.now().plus(100000, ChronoUnit.HOURS).toEpochMilli()
                 ))
                 // Thêm một custom claim (thông tin tùy chỉnh) vào JWT, chứa thông tin về đối tượng Student
                 .claim("scope", getScope(user))
