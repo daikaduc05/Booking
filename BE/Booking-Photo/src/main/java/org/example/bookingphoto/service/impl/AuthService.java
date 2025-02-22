@@ -36,6 +36,10 @@ public class AuthService implements IAuthService {
     private UserDetailService userDetailService;
     @Override
     public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest) {
+        // Kiểm tra nếu database không có người dùng nào
+        if (userRepository.count() == 0) {
+            throw new ApiException(ErrorCode.UNAUTHENTICATION); // Bạn cần định nghĩa ErrorCode.DATABASE_EMPTY
+        }
         User user = userRepository.findByUsername(authenticationRequest.getUsername());
         UserDetails userDetails = userDetailService.loadUserByUsername(authenticationRequest.getUsername());
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);

@@ -18,4 +18,6 @@ public interface IProductService {
     Product update(Integer packageId, Integer productId, ProductEditDTO productEditDTO);
 
     void delete(Integer packageId, Integer productId);
+    List<ProductShowDTO> showProducts();
+
 }

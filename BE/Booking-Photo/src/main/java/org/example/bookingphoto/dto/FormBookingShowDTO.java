@@ -24,4 +24,5 @@ public class FormBookingShowDTO {
     private Boolean status;
     private Integer packageId;
     private String packageName;
+    private Integer pricePackage;
 }

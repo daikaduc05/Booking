@@ -19,6 +19,12 @@ public class ProductController {
     @Autowired
     private IProductService productService;
 
+    @GetMapping("")
+    public ResponseEntity<List<ProductShowDTO>> showProducts () {
+        List<ProductShowDTO> productShowDTOList = productService.showProducts();
+        return new ResponseEntity<>(productShowDTOList, HttpStatus.OK);
+    }
+
     @GetMapping("/{packageId}")
     public ResponseEntity<List<ProductShowDTO>> showProductByPackage (@PathVariable("packageId") Integer packageId) {
         List<ProductShowDTO> productShowDTOList = productService.showProductByPackage(packageId);

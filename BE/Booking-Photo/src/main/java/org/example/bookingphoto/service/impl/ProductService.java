@@ -69,4 +69,9 @@ public class ProductService implements IProductService {
         Product product = optionalProduct.get();
         productRepository.delete(product);
     }
+
+    @Override
+    public List<ProductShowDTO> showProducts() {
+        return productRepository.showProducts();
+    }
 }
