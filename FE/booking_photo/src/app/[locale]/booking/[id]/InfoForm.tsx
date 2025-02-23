@@ -82,7 +82,7 @@ const InfoForm = ({
       name: values.username,
       bookTime: selectedDateTime,
       message: values.note,
-      location: "Hà Nội",
+      location: "",
     };
     try {
       const res = await axios.post(`https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/formBookings/create/${selectPackages?.packageId}`,data, {

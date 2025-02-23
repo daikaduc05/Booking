@@ -21,8 +21,10 @@ const Footer = () => {
               booking@gmail.com
             </div>
             <div className="flex items-center cursor-pointer hover:translate-x-5 hover:text-purple-500 hover:scale-105 duration-300 gap-2">
-              <FaInstagram size={16} />
-              @booking_photo
+              <Link target="_blank" rel="noopener noreferrer" className="flex items-center gap-2" href="https://www.instagram.com/duckb12/">
+                <FaInstagram size={16} />
+                duckb12
+              </Link>
             </div>
           </div>
         </div>

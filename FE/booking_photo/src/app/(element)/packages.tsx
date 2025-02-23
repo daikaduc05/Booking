@@ -1,16 +1,10 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
-import { IPackages, IPackagesAdmin, IPackagesShow } from "@/model/packages";
 import { IProductShow } from "@/model/product";
 
-
-
-
-
 const Packages = ({ productShow }: { productShow: IProductShow[] }) => {
-  // const packageItem = productShow;
   const t = useTranslations("Packages");
   const router = useRouter();
   const params = useParams();
@@ -18,28 +12,44 @@ const Packages = ({ productShow }: { productShow: IProductShow[] }) => {
     [key: number]: string;
   }>({});
 
-  // useEffect(() => {
-  //   const newFormattedPrices = packageItem.reduce<{ [key: number]: string }>(
-  //     (acc, item) => {
-  //       acc[item.packageId] = item.pricePackage.toLocaleString();
-  //       return acc;
-  //     },
-  //     {}
-  //   );
-  //   setFormattedPrices(newFormattedPrices);
-  // }, []);
-  
+  // Function to filter out duplicate products based on the 'packageId' field
+  const filterUniqueProducts = (products: IProductShow[]) => {
+    const seenIds = new Set();
+    return products.filter((product) => {
+      if (seenIds.has(product.packageId)) {
+        return false;
+      } else {
+        seenIds.add(product.packageId);
+        return true;
+      }
+    });
+  };
+
+  // Memoize the filtered products to avoid recalculating on every render
+  const uniqueProductShow = useMemo(() => filterUniqueProducts(productShow), [productShow]);
+
+  // Formatting prices for the packages (runs once when uniqueProductShow is updated)
+  useEffect(() => {
+    const newFormattedPrices = uniqueProductShow.reduce<{ [key: number]: string }>(
+      (acc, item) => {
+        acc[item.packageId] = item.pricePackage.toLocaleString();
+        return acc;
+      },
+      {}
+    );
+    setFormattedPrices(newFormattedPrices);
+  }, [uniqueProductShow]);
 
   return (
     <div className="bg-[#d6d6d6] py-16">
       <h1 className="text-4xl text-center mb-12">{t("title")}</h1>
-      {productShow.length === 0 ? (
+      {uniqueProductShow.length === 0 ? (
         <div className="flex items-center justify-center font-semibold pb-5">
           Chưa có dữ liệu
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mx-10 md:mx-20">
-          {productShow.map((item, index) => (
+          {uniqueProductShow.map((item, index) => (
             <div
               key={index}
               onClick={() =>

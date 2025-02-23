@@ -1,45 +1,57 @@
-'use client';
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import Cookies from 'js-cookie';
-import { useRouter } from 'next/navigation';
-import { toast } from 'react-toastify';
-import { error } from 'console';
+"use client";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import { error } from "console";
+import Swal from "sweetalert2";
 
 const Login = () => {
-  const [user,setUser] = useState('');
-  const [pass,setPass] = useState('');
+  const [user, setUser] = useState("");
+  const [pass, setPass] = useState("");
   const router = useRouter();
   useEffect(() => {
-    
-    if(sessionStorage.getItem('token')){
-      router.push('/admin');
+    if (sessionStorage.getItem("token")) {
+      router.push("/admin");
     }
-  },[])
-  
-  const handleSubmit = async(e :any) => {
+  }, []);
+
+  const handleSubmit = async (e: any) => {
     // debugger;
     e.preventDefault();
     const data = {
       username: user,
-      password: pass
-    }
-    
+      password: pass,
+    };
+
     try {
-      const res = await axios.post('https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/auth/authenticate',data,{
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if(res){
+      const res = await axios.post(
+        "https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/auth/authenticate",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (res) {
         sessionStorage.setItem("token", res.data.token);
-        router.push('/admin');
-      }
-      else{
-        toast.error('Login failed');
+        router.push("/admin");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Vui lòng kiểm tra lại tài khoản mật khẩu",
+        });
       }
     } catch (error) {
       console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Vui lòng kiểm tra lại tài khoản mật khẩu",
+      });
     }
   };
 

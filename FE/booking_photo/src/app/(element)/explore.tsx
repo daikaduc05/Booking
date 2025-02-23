@@ -9,12 +9,43 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
-import { IProductShow } from "@/model/product";
-
+import { IProductShow, ISlider } from "@/model/product";
 
 const Explore = ({ productShow }: { productShow: IProductShow[] }) => {
   const t = useTranslations("Explore");
 
+  const groupByPackage = (products: IProductShow[]): ISlider[] => {
+    const grouped: Record<number, ISlider> = {};
+
+    products.forEach((product) => {
+      if (!grouped[product.packageId]) {
+        grouped[product.packageId] = {
+          productId: [],
+          image: [],
+          packageId: product.packageId,
+          namePackage: product.namePackage,
+          descriptionPackage: product.descriptionPackage,
+        };
+      }
+
+      grouped[product.packageId].productId.push(product.productId);
+      grouped[product.packageId].image.push(product.image);
+    });
+
+    return Object.values(grouped).map((slider) => {
+      return {
+        ...slider,
+        productId: slider.productId.slice(0, 3),
+        image: slider.image.slice(0, 3),
+      };
+    });
+  };
+
+  const sortedProducts = [...productShow].sort(
+    (a, b) => b.productId - a.productId
+  );
+
+  const sliders = groupByPackage(sortedProducts);
 
   return (
     <div className="bg-[#B1B0B0] h-fit pt-5">
@@ -22,29 +53,37 @@ const Explore = ({ productShow }: { productShow: IProductShow[] }) => {
         {t("title")}
       </h1>
       <div className="pt-10">
-        {productShow.length === 0 ? (
-          <div className="flex items-center justify-center font-semibold pb-5">Chưa có dữ liệu</div>
+        {sliders.length === 0 ? (
+          <div className="flex items-center justify-center font-semibold pb-5">
+            Chưa có dữ liệu
+          </div>
         ) : (
           <Carousel className="relative">
             <CarouselContent>
-              {productShow.map((product, index) => (
+              {sliders.map((slider, index) => (
                 <CarouselItem key={index}>
-                  <Card className="bg-[#443F3F] h-fit py-16  grid grid-cols-3 ">
+                  <Card className="bg-[#443F3F] h-fit py-16 grid grid-cols-3">
                     <div className="col-span-2 grid grid-cols-1 gap-4">
                       <div className="flex gap-2 mx-auto">
-                        {productShow.map((product, index) => (
-                          <img
-                            src={product.image}
-                            key={index}
-                            className={`object-cover transition-all duration-500 ${
-                              index % 2 === 1 ? "mt-14" : "mb-14"
-                            } h-[350px] w-[240px] rounded-3xl hover:translate-y-[-20px]`}
-                          />
+                        {slider.image.map((img, index) => (
+                          <div key={index}>
+                            {slider.productId[index] ? (
+                              <img
+                                src={img || "https://via.placeholder.com/300"} // fallback if no image
+                                key={index}
+                                className={`object-cover transition-all duration-500 ${
+                                  index % 2 === 1 ? "mt-14" : "mb-14"
+                                } h-[350px] w-[240px] rounded-3xl hover:translate-y-[-20px]`}
+                              />
+                            ) : (
+                              <></>
+                            )}
+                          </div>
                         ))}
                       </div>
                     </div>
-                    <CardContent className="col-span-1  text-right leading-relaxed flex items-center text-white mr-14">
-                      {product.namePackage}
+                    <CardContent className="col-span-1 text-right leading-relaxed flex items-center text-white mr-14">
+                      {slider.descriptionPackage}
                     </CardContent>
                   </Card>
                 </CarouselItem>

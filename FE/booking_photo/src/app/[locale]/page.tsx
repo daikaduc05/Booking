@@ -12,10 +12,10 @@ import { IPackages, IPackagesAdmin, IPackagesShow } from "@/model/packages";
 import { IProduct, IProductShow } from "@/model/product";
 const page = () => {
   const [productShow, setProductShow] = useState<IProductShow[]>([]);
+  const [packages, setPackages] = useState<IPackagesAdmin[]>([]);
   
   useEffect(() => {
     const fetchProducts = async () => {
-      
       try {
         const res = await axios.get(
           "https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/products",{
@@ -34,6 +34,8 @@ const page = () => {
     };
     fetchProducts();
   }, []);
+
+  console.log("productShow", productShow);
 
 
 

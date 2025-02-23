@@ -10,7 +10,6 @@ const page = () => {
   const t = useTranslations("Booking");
   const params = useParams();
   const [language, setLanguage] = useState(params.locale);
-  const [packageList, setPackagesList] = useState<IPackagesAdmin[]>([]);
   const [selectPackage, setSelectPackage] = useState<IPackagesAdmin>();
 
   useEffect(() => {
@@ -25,17 +24,17 @@ const page = () => {
           }
         );
         if (res) {
-          console.log(res.data);
-          setPackagesList(res.data);
+          setSelectPackage(res.data.find((item: IPackagesAdmin) => item.packageId === Number(params.id)));
         }
-        console.log(packageList);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
     fetchPackages();
   }, []);
+  console.log("cac",selectPackage);
 
+  
   return (
     <div className=" flex flex-col justify-center items-center ">
       <div className="flex gap-2 items-center fixed top-0 left-0 p-4">
