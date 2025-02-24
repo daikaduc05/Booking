@@ -76,7 +76,7 @@ const Sidebar = () => {
               {item.title}
             </button>
           ))}
-          <Button onClick={()=>handleLogout()} className="bg-red-500 text-white hover:bg-red-400 duration-300">
+          <Button onClick={()=>handleLogout()} className="bg-red-500 hover:scale-105 text-white hover:bg-red-600 duration-300 transition-all">
             Logout
           </Button>
         </div>

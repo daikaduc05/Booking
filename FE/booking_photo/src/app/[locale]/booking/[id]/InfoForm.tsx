@@ -95,6 +95,7 @@ const InfoForm = ({
           title:"Đã đặt lịch thành công",
           icon:"success"
         })
+        router.push("/")
       }
     } catch (error) {
       Swal.fire({

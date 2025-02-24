@@ -1,11 +1,12 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import InfoForm from "./InfoForm";
 import PackageInfo from "./PackageInfo";
 import { useTranslations } from "next-intl";
 import { IPackagesAdmin } from "@/model/packages";
 import axios from "axios";
+
 const page = () => {
   const t = useTranslations("Booking");
   const params = useParams();
@@ -57,8 +58,12 @@ const page = () => {
       </div>
       <h1 className="py-6 text-3xl font-semibold">{t("title")}</h1>
       <div className="flex justify-center items-center gap-2">
+        
         <PackageInfo selectPackages={selectPackage} />
+      
+        
         <InfoForm selectPackages={selectPackage} />
+      
       </div>
     </div>
   );

@@ -38,6 +38,12 @@ const Login = () => {
       if (res) {
         sessionStorage.setItem("token", res.data.token);
         router.push("/admin");
+        Swal.fire({
+          icon: "success",
+          title: "Đăng nhập thành công",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       } else {
         Swal.fire({
           icon: "error",
