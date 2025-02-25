@@ -7,10 +7,25 @@ const withNextIntl = createNextIntlPlugin();
 const nextConfig: NextConfig = {
   reactStrictMode: false, // Tắt Strict Mode
   images: {
-    domains: ["your-cloudinary-domain.com", "res.cloudinary.com", "th.bing.com","i.pinimg.com"], // Thêm domain của Cloudinary
-    
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "your-cloudinary-domain.com", // Thêm domain của Cloudinary
+      },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+      },
+      {
+        protocol: "https",
+        hostname: "th.bing.com",
+      },
+      {
+        protocol: "https",
+        hostname: "i.pinimg.com",
+      },
+    ], // Đã thay thế images.domains với images.remotePatterns
   },
-  
 };
 
 module.exports = withNextIntl(nextConfig);

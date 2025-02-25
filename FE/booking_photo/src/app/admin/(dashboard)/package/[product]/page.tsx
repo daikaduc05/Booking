@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
@@ -32,30 +32,34 @@ const Page = () => {
   const router = useRouter();
 
   // Fetch gói và hình ảnh khi trang tải
-  const fetchPackagesData = async () => {
-    try {
-      const token = sessionStorage.getItem("token");
-      const [packageResponse, productResponse] = await Promise.all([
-        axios.get(
-          "https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/packages",
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        ),
-        axios.get(
-          `https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/products/${product}`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        ),
-      ]);
-
-      setPackages(packageResponse.data);
-      setImages(productResponse.data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  const fetchPackagesData = useCallback(() => {
+    const fetchData = async () => {
+      try {
+        const token = sessionStorage.getItem("token");
+        const [packageResponse, productResponse] = await Promise.all([
+          axios.get(
+            "https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/packages",
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          ),
+          axios.get(
+            `https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/products/${product}`,
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          ),
+        ]);
+  
+        setPackages(packageResponse.data);
+        setImages(productResponse.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+  
+    fetchData(); // Call the async function
+  }, []); 
 
   useEffect(() => {
     fetchPackagesData();

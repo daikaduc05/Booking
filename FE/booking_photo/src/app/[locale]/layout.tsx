@@ -19,16 +19,17 @@ export const metadata: Metadata = {
 export default async function RootLayout({
   children,
   params: { locale },
-}: {
+}: Readonly<{
   children: React.ReactNode;
-  params: { locale: string };
-}) {
-  const messages = await getMessages();
-  
+  params: { locale?: string };
+}>) {
   // Kiểm tra xem locale có hợp lệ không
-  if (!routing?.locales.includes(locale as "en" | "vn")) {
-    notFound(); // Nếu không hợp lệ, trả về 404
+  if (!routing.locales.includes(locale as "en" | "vn")) {
+    notFound(); // Nếu không hợp lệ, chuyển hướng đến trang 404
   }
+
+  // Lấy bản dịch cho locale tương ứng
+  const messages = await getMessages({locale});
 
   return (
     <html lang={locale}>
