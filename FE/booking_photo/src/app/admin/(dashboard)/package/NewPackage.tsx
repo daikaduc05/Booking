@@ -26,7 +26,6 @@ const formSchema = z.object({
 });
 
 const NewPackage = ({
-  isAdd,
   setAdd,
   setLoading,
   loading
@@ -44,7 +43,6 @@ const NewPackage = ({
       description: "",
     },
   });
-  const router = useRouter();
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const data = {
       name: values.name,

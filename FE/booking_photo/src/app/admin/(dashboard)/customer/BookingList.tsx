@@ -65,7 +65,7 @@ const BookingList = ({
           }
         );
         
-        const bookingData: IBookingFormShow[] = res.data.map((item: any) => ({
+        const bookingData: IBookingFormShow[] = res.data.map((item: IBookingFormShow) => ({
           ...item,
           createAt: new Date(item.createAt),
           bookTime: new Date(item.bookTime),

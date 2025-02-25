@@ -12,8 +12,6 @@ import {IPackagesAdmin } from "@/model/packages";
 import {  IProductShow } from "@/model/product";
 const Page = () => {
   const [productShow, setProductShow] = useState<IProductShow[]>([]);
-  const [packages, setPackages] = useState<IPackagesAdmin[]>([]);
-  
   useEffect(() => {
     const fetchProducts = async () => {
       try {

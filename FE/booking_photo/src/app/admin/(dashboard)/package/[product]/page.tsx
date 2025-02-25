@@ -9,6 +9,17 @@ import {  IProductShow } from "@/model/product";
 import { TiDelete } from "react-icons/ti";
 import Swal from "sweetalert2";
 
+interface CloudinaryInfo {
+  secure_url: string;
+  public_id: string;
+  format: string;
+  original_filename: string;
+}
+
+interface CloudinaryUploadWidgetResults {
+  event?: string;  // event is now optional and can be undefined
+  info?: string | CloudinaryInfo;
+}
 
 const Page = () => {
   const [packages, setPackages] = useState<IPackagesAdmin[]>([]);
@@ -54,8 +65,8 @@ const Page = () => {
     ...new Array(4 - images.length).fill(null),
   ];
 
-  const handleSuccess = async (result: any) => {
-    if (result.event === "success") {
+  const handleSuccess = async (result: CloudinaryUploadWidgetResults) => {
+    if (result.event === "success" && typeof result.info === "object") {
       const uploadedImageUrl = result.info.secure_url;
       try {
         const token = sessionStorage.getItem("token");

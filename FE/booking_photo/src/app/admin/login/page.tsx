@@ -14,7 +14,7 @@ const Login = () => {
     }
   }, []);
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     // debugger;
     e.preventDefault();
     const data = {
