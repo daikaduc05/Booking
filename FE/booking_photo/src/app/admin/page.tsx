@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 
-const page = () => {
+const Page = () => {
   const [key, setKey] = useState(0);
   const text = "Chào mừng tới trang quản trị của chúng tôi";
 
@@ -41,4 +41,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

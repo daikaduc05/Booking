@@ -13,4 +13,7 @@ public class ProductShowDTO {
     private Integer productId;
     private String image;
     private Integer packageId;
+    private String namePackage;
+    private Integer pricePackage;
+    private String descriptionPackage;
 }

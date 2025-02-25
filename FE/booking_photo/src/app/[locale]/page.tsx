@@ -10,7 +10,7 @@ import { ToastContainer } from "react-toastify";
 import axios from "axios";
 import { IPackages, IPackagesAdmin, IPackagesShow } from "@/model/packages";
 import { IProduct, IProductShow } from "@/model/product";
-const page = () => {
+const Page = () => {
   const [productShow, setProductShow] = useState<IProductShow[]>([]);
   const [packages, setPackages] = useState<IPackagesAdmin[]>([]);
   
@@ -62,4 +62,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

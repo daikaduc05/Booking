@@ -19,7 +19,7 @@ import axios from "axios";
 
 const title = ["Email", "Sao", "Bình luận"];
 
-const page = () => {
+const Page = () => {
   const [rating, setRating] = useState<RatingShow[]>([]);
   useEffect(() => {
     const fetchRating = async () => {
@@ -133,4 +133,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

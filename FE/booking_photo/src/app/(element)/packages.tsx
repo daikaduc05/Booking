@@ -1,14 +1,15 @@
 "use client";
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
+
 import { IProductShow } from "@/model/product";
 
 const Packages = ({ productShow }: { productShow: IProductShow[] }) => {
   const t = useTranslations("Packages");
   const router = useRouter();
   const params = useParams();
-  const [formattedPrices, setFormattedPrices] = useState<{
+  const [formattedPrices] = useState<{
     [key: number]: string;
   }>({});
 

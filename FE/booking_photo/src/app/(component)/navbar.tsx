@@ -40,7 +40,7 @@ const Navbar = () => {
   ];
   useEffect(() => {
     router.push(`/${language}`);
-  }, [language]);
+  }, [router,language]);
 
   return (
     <div>
