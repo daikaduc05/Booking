@@ -7,3 +7,11 @@ export interface IProductShow{
     descriptionPackage : string;
 }   
 
+export interface ISlider{
+    productId : number[];
+    image : string[];
+    packageId : number;
+    namePackage : string;
+    descriptionPackage : string;
+}
+

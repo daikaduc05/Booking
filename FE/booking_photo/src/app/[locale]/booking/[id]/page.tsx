@@ -6,6 +6,7 @@ import PackageInfo from "./PackageInfo";
 import { useTranslations } from "next-intl";
 import { IPackagesAdmin } from "@/model/packages";
 import axios from "axios";
+import Image from "next/image";
 
 const Page = () => {
   const t = useTranslations("Booking");
@@ -32,14 +33,17 @@ const Page = () => {
       }
     };
     fetchPackages();
-  }, []);
+  }, [params.id]);
   console.log("cac",selectPackage);
 
   
   return (
     <div className=" flex flex-col justify-center items-center ">
       <div className="flex gap-2 items-center fixed top-0 left-0 p-4">
-        <img
+        <Image
+          width={40}
+          height={40}
+          alt="logo"
           src={`${
             language === "vn"
               ? "https://th.bing.com/th/id/R.58ec68d1566a4131ccf6853f2126742f?rik=R8ycwx8d5ucu7g&pid=ImgRaw&r=0"

@@ -1,5 +1,5 @@
 "use client";
-import React, {} from "react";
+import React from "react";
 import { useTranslations } from "next-intl";
 import {
   Carousel,
@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
 import { IProductShow, ISlider } from "@/model/product";
+import Image from "next/image";
 
 const Explore = ({ productShow }: { productShow: IProductShow[] }) => {
   const t = useTranslations("Explore");
@@ -65,12 +66,14 @@ const Explore = ({ productShow }: { productShow: IProductShow[] }) => {
                   <Card className="bg-[#443F3F] h-fit py-16 grid grid-cols-3">
                     <div className="col-span-2 grid grid-cols-1 gap-4">
                       <div className="flex gap-2 mx-auto">
-                        {slider.image.map((img, index) => (
+                        {slider.image.map((img: string, index: number) => (
                           <div key={index}>
                             {slider.productId[index] ? (
-                              <img
-                                src={img || "https://via.placeholder.com/300"} // fallback if no image
-                                key={index}
+                              <Image
+                                alt="Image description"
+                                width={500} 
+                                height={300} 
+                                src={img || "https://via.placeholder.com/300"} 
                                 className={`object-cover transition-all duration-500 ${
                                   index % 2 === 1 ? "mt-14" : "mb-14"
                                 } h-[350px] w-[240px] rounded-3xl hover:translate-y-[-20px]`}

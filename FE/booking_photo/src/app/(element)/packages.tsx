@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
 
 import { IProductShow } from "@/model/product";
+import Image from "next/image";
 
 const Packages = ({ productShow }: { productShow: IProductShow[] }) => {
   const t = useTranslations("Packages");
@@ -60,7 +61,9 @@ const Packages = ({ productShow }: { productShow: IProductShow[] }) => {
               }
               className="bg-white cursor-pointer hover:shadow-lg hover:scale-105 transform transition-all duration-300 rounded-xl overflow-hidden"
             >
-              <img
+              <Image
+                width={300}
+                height={300}
                 src={item?.image || "https://via.placeholder.com/300"}
                 alt={item?.namePackage || "Package"}
                 className="w-full h-[300px] object-cover "

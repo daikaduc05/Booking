@@ -8,7 +8,6 @@ import RatingForm from "../(element)/ratingForm";
 import Footer from "../(element)/footer";
 import { ToastContainer } from "react-toastify";
 import axios from "axios";
-import {IPackagesAdmin } from "@/model/packages";
 import {  IProductShow } from "@/model/product";
 const Page = () => {
   const [productShow, setProductShow] = useState<IProductShow[]>([]);
@@ -32,8 +31,6 @@ const Page = () => {
     };
     fetchProducts();
   }, []);
-
-  console.log("productShow", productShow);
 
 
 

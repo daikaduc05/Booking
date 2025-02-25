@@ -3,6 +3,7 @@ import { IProductShow } from "@/model/product";
 import React, { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import axios from "axios";
+import Image from "next/image";
 
 const PackageInfo = ({
   selectPackages,
@@ -61,7 +62,9 @@ const PackageInfo = ({
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-8 w-full">
           <div className="flex flex-shrink-0 w-full sm:w-[50%] h-[300px] sm:h-[400px] justify-center bg-gray-200 rounded-xl">
             {viewProduct?.image ? (
-              <img
+              <Image
+                width={400}
+                height={400}
                 className="object-cover w-full h-full rounded-lg"
                 src={viewProduct?.image || "/images/placeholder.svg"}
                 alt="Product view"
@@ -92,7 +95,9 @@ const PackageInfo = ({
             >
               <>
                 {product?.image ? (
-                  <img
+                  <Image
+                    width={100}
+                    height={100}
                     className="object-cover w-full h-full"
                     src={product?.image || "/images/placeholder.svg"}
                     alt="Product thumbnail"

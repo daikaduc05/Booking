@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import {useTranslations} from 'next-intl';
+import Image from "next/image";
 
 const Home = () => {
   const [inViewImg1, setInViewImg1] = useState(false);
@@ -86,7 +87,7 @@ const Home = () => {
       </h1>
       {/* First Section */}
       <div className="flex items-center justify-between h-[50%] gap-10 px-8">
-        <img
+        <Image
           id="img1"
           src="https://i.pinimg.com/736x/1f/9b/2a/1f9b2adfaf6052055d5754b1c49464a9.jpg"
           alt="booking_photo"
@@ -121,7 +122,7 @@ const Home = () => {
         >
          {t('params2')}
         </p>
-        <img
+        <Image
           id="img2"
           src="https://i.pinimg.com/736x/79/aa/ea/79aaea1782152703088ae82f47fce5f9.jpg"
           alt="booking_photo_2"

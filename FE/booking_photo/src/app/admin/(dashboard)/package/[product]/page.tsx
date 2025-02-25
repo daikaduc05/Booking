@@ -8,6 +8,7 @@ import { IPackagesAdmin } from "@/model/packages";
 import {  IProductShow } from "@/model/product";
 import { TiDelete } from "react-icons/ti";
 import Swal from "sweetalert2";
+import Image from "next/image";
 
 interface CloudinaryInfo {
   secure_url: string;
@@ -136,7 +137,9 @@ const Page = () => {
             >
               {item ? (
                 <>
-                  <img
+                  <Image
+                    width={400}
+                    height={400}
                     className="object-cover w-full h-full rounded-lg"
                     src={item?.image || "/images/checked.svg"}
                     alt={`image-${index}`}

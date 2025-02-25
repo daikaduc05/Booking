@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { FaArrowCircleDown, FaArrowCircleUp } from "react-icons/fa";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
+import Image from "next/image";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,7 +41,7 @@ const Navbar = () => {
   ];
   useEffect(() => {
     router.push(`/${language}`);
-  }, [router,language]);
+  }, [router, language]);
 
   return (
     <div>
@@ -68,14 +69,22 @@ const Navbar = () => {
           </div>
           <div className="flex items-center gap-5 ml-2">
             <div className="flex gap-2 items-center">
-              <img
+              <Image
                 src={`${
                   language === "vn"
                     ? "https://th.bing.com/th/id/R.58ec68d1566a4131ccf6853f2126742f?rik=R8ycwx8d5ucu7g&pid=ImgRaw&r=0"
                     : "https://th.bing.com/th/id/OIP.U-h9wYdOSH047roWjY_1TgHaE3?rs=1&pid=ImgDetMain"
                 }`}
+                alt="Description of the image"
                 className="size-8 rounded-full object-cover"
+                loading="lazy"
+                width={500}
+                height={500}
+                title="Image Title"
+                style={{ border: "2px solid #ccc" }}
+                draggable={false}
               />
+
               <select
                 value={language}
                 onChange={(e) => setLanguage(e.target.value)}
@@ -86,7 +95,10 @@ const Navbar = () => {
               </select>
             </div>
 
-            <button onClick={()=>scrollToSection("packages")} className="w-[120px] h-[50px] rounded-lg bg-[#c4c4c4] hover:bg-[#b0aeae] shadow-lg duration-300">
+            <button
+              onClick={() => scrollToSection("packages")}
+              className="w-[120px] h-[50px] rounded-lg bg-[#c4c4c4] hover:bg-[#b0aeae] shadow-lg duration-300"
+            >
               {t("book")}
             </button>
           </div>
