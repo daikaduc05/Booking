@@ -1,8 +1,6 @@
 "use client";
-import React, { use } from "react";
-
+import React from "react";
 import "../globals.css";
-import Cookies from "js-cookie";
 import Sidebar from "../(component)/Sidebar";
 import { usePathname } from "next/navigation";
 import { ToastContainer } from "react-toastify";

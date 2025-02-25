@@ -1,8 +1,3 @@
-export interface IProduct {
-    id: number;
-    img: string;
-    packageId : number;
-}
 export interface IProductShow{
     productId : number;
     image : string;
@@ -12,10 +7,3 @@ export interface IProductShow{
     descriptionPackage : string;
 }   
 
-export interface ISlider{
-    productId : number[];
-    image : string[];
-    packageId : number;
-    namePackage : string;
-    descriptionPackage : string;
-}

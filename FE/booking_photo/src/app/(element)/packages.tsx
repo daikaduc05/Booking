@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
 
@@ -9,7 +9,7 @@ const Packages = ({ productShow }: { productShow: IProductShow[] }) => {
   const t = useTranslations("Packages");
   const router = useRouter();
   const params = useParams();
-  const [formattedPrices] = useState<{
+  const [formattedPrices, setFormattedPrices] = useState<{
     [key: number]: string;
   }>({});
 
@@ -27,17 +27,19 @@ const Packages = ({ productShow }: { productShow: IProductShow[] }) => {
   };
 
   // Memoize the filtered products to avoid recalculating on every render
-  const uniqueProductShow = useMemo(() => filterUniqueProducts(productShow), [productShow]);
+  const uniqueProductShow = useMemo(
+    () => filterUniqueProducts(productShow),
+    [productShow]
+  );
 
   // Formatting prices for the packages (runs once when uniqueProductShow is updated)
   useEffect(() => {
-    const newFormattedPrices = uniqueProductShow.reduce<{ [key: number]: string }>(
-      (acc, item) => {
-        acc[item.packageId] = item.pricePackage.toLocaleString();
-        return acc;
-      },
-      {}
-    );
+    const newFormattedPrices = uniqueProductShow.reduce<{
+      [key: number]: string;
+    }>((acc, item) => {
+      acc[item.packageId] = item.pricePackage.toLocaleString();
+      return acc;
+    }, {});
     setFormattedPrices(newFormattedPrices);
   }, [uniqueProductShow]);
 
@@ -72,7 +74,9 @@ const Packages = ({ productShow }: { productShow: IProductShow[] }) => {
                     ? `${formattedPrices[item.packageId]} VNĐ`
                     : "Chưa cập nhật giá"}
                 </p>
-                <p className="text-gray-500 text-sm">{item.descriptionPackage}</p>
+                <p className="text-gray-500 text-sm">
+                  {item.descriptionPackage}
+                </p>
               </div>
             </div>
           ))}

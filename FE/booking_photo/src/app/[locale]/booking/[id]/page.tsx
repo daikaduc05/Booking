@@ -1,13 +1,13 @@
 "use client";
-import React, { Suspense, useEffect, useState } from "react";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import React, {  useEffect, useState } from "react";
+import { useParams} from "next/navigation";
 import InfoForm from "./InfoForm";
 import PackageInfo from "./PackageInfo";
 import { useTranslations } from "next-intl";
 import { IPackagesAdmin } from "@/model/packages";
 import axios from "axios";
 
-const page = () => {
+const Page = () => {
   const t = useTranslations("Booking");
   const params = useParams();
   const [language, setLanguage] = useState(params.locale);

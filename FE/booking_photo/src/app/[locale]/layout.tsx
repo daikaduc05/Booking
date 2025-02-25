@@ -29,7 +29,7 @@ export default async function RootLayout({
 }>) {
   const messages = await getMessages();
   // const locales = routing.locales.includes(locale as any) ? locale : routing.defaultLocale;
-  if (!routing.locales.includes(locale as string)) {
+  if (!routing.locales.includes(locale as "en" | "vn")) {
     notFound();
   }
   

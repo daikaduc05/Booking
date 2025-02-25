@@ -3,7 +3,6 @@ import { IProductShow } from "@/model/product";
 import React, { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import axios from "axios";
-import { useParams } from "next/navigation";
 
 const PackageInfo = ({
   selectPackages,

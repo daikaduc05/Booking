@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -11,7 +10,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import Swal from "sweetalert2";
-import { IPackages, IPackagesAdmin } from "@/model/packages";
+import {  IPackagesAdmin } from "@/model/packages";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { FaPlus } from "react-icons/fa";

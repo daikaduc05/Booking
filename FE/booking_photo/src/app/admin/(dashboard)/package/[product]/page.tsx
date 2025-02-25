@@ -5,10 +5,10 @@ import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import { CldUploadWidget } from "next-cloudinary";
 import { IPackagesAdmin } from "@/model/packages";
-import { IProduct, IProductShow } from "@/model/product";
+import {  IProductShow } from "@/model/product";
 import { TiDelete } from "react-icons/ti";
 import Swal from "sweetalert2";
-import { set } from "zod";
+
 
 const Page = () => {
   const [packages, setPackages] = useState<IPackagesAdmin[]>([]);

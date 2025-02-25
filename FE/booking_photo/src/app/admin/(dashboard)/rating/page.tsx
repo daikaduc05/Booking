@@ -1,18 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Rating, RatingShow } from "@/model/rating";
+import { RatingShow } from "@/model/rating";
 import Swal from "sweetalert2";
 import { FaStar } from "react-icons/fa";
 import axios from "axios";

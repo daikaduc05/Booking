@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 
 const Page = () => {

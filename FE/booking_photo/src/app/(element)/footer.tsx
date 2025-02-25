@@ -2,6 +2,7 @@ import React from "react";
 import { FaPhoneAlt, FaEnvelope, FaInstagram } from "react-icons/fa";
 import { MdLocationOn } from "react-icons/md";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 
 
 const Footer = () => {

@@ -8,8 +8,8 @@ import RatingForm from "../(element)/ratingForm";
 import Footer from "../(element)/footer";
 import { ToastContainer } from "react-toastify";
 import axios from "axios";
-import { IPackages, IPackagesAdmin, IPackagesShow } from "@/model/packages";
-import { IProduct, IProductShow } from "@/model/product";
+import {IPackagesAdmin } from "@/model/packages";
+import {  IProductShow } from "@/model/product";
 const Page = () => {
   const [productShow, setProductShow] = useState<IProductShow[]>([]);
   const [packages, setPackages] = useState<IPackagesAdmin[]>([]);

@@ -2,12 +2,10 @@
 import React, { useEffect, useState } from "react";
 import BookingList from "./BookingList";
 import { toast } from "react-toastify";
-// import { packages } from "@/app/(element)/packages";
-import { IPackages, IPackagesAdmin } from "@/model/packages";
+import {  IPackagesAdmin } from "@/model/packages";
 import axios from "axios";
-import { IBookingFormShow } from "@/model/bookingForm";
 
-// const packagesList = packages;
+
 
 const Page = () => {
   const [search, setSearch] = useState("");

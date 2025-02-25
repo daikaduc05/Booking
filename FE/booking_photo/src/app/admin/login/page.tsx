@@ -1,10 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
-import { error } from "console";
 import Swal from "sweetalert2";
 
 const Login = () => {
