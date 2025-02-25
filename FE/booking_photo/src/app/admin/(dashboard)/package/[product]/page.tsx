@@ -59,7 +59,7 @@ const Page = () => {
     };
   
     fetchData(); // Call the async function
-  }, []); 
+  }, [product]); 
 
   useEffect(() => {
     fetchPackagesData();
