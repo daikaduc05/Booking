@@ -12,7 +12,7 @@ const Login = () => {
     if (sessionStorage.getItem("token")) {
       router.push("/admin");
     }
-  }, []);
+  }, [router]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     // debugger;

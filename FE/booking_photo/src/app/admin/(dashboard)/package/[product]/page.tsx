@@ -59,7 +59,7 @@ const Page = () => {
 
   useEffect(() => {
     fetchPackagesData();
-  }, [product, loading]);
+  }, [fetchPackagesData]);
 
   const imgView = [
     ...images.slice(0, 4),
