@@ -6,9 +6,9 @@ import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 
-// Load the Lora font from Google Fonts
+
 const lora = Lora({
-  variable: "--font-lora", // Define a custom variable for the font
+  variable: "--font-lora", 
   subsets: ["latin"],
 });
 
@@ -18,18 +18,19 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
-  params: { locale },
+  params
 }: Readonly<{
   children: React.ReactNode;
-  params: { locale?: string };
+  params: Promise<{ locale: string }>;
 }>) {
-  // Kiểm tra xem locale có hợp lệ không
+  const { locale } = await params; 
+
+ 
   if (!routing.locales.includes(locale as "en" | "vn")) {
-    notFound(); // Nếu không hợp lệ, chuyển hướng đến trang 404
+    notFound(); 
   }
 
-  // Lấy bản dịch cho locale tương ứng
-  const messages = await getMessages({locale});
+  const messages = await getMessages({ locale });
 
   return (
     <html lang={locale}>
