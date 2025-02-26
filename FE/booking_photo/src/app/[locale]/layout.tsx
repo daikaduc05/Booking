@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
-import { Lora } from "next/font/google"; // Import Lora font
+import { Lora } from "next/font/google";
 import "../globals.css";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-
 
 const lora = Lora({
   variable: "--font-lora", 
@@ -21,13 +20,12 @@ export default async function RootLayout({
   params
 }: Readonly<{
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
+  params: { locale: string };
 }>) {
-  const { locale } = await params; 
+  const { locale } = params;
 
- 
   if (!routing.locales.includes(locale as "en" | "vn")) {
-    notFound(); 
+    notFound();
   }
 
   const messages = await getMessages({ locale });
