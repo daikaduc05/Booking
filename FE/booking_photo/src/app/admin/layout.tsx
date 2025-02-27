@@ -1,5 +1,6 @@
-"use client";
-import React from "react";
+"use client"; // Đảm bảo mã này chạy trên client-side
+
+import React, { useEffect } from "react";
 import "../globals.css";
 import Sidebar from "../(component)/Sidebar";
 import { usePathname } from "next/navigation";
@@ -11,11 +12,19 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const path = usePathname();
-  const isLogin = sessionStorage.getItem("token")
-  console.log(path);
-  if (!isLogin&&!path.includes("login")) {
-    window.location.href = "/admin/login";
-  }
+
+  useEffect(() => {
+    // Kiểm tra nếu đang chạy trên client-side
+    if (typeof window !== "undefined") {
+      const isLogin = sessionStorage.getItem("token");
+      console.log(path);
+      if (!isLogin && !path.includes("login")) {
+        // Chuyển hướng đến trang login nếu không có token
+        window.location.href = "/admin/login";
+      }
+    }
+  }, [path]);
+
   return (
     <html lang="en">
       <body className="bg-gray-200">

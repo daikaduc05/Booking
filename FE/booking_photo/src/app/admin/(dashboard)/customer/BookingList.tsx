@@ -49,43 +49,53 @@ const BookingList = ({
   const [bookingList, setBookingList] = useState<IBookingFormShow[]>([]);
   const [filteredBookings, setFilteredBookings] = useState<IBookingFormShow[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [token, setToken] = useState<string | null>(null);
 
-  // Fetch data from API only once
+  // Lấy token từ sessionStorage chỉ khi client-side
   useEffect(() => {
-    const fetchBookingList = async () => {
-      setLoading(true);
-      try {
-        const res = await axios.get(
-          "https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/formBookings",
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-            },
-          }
-        );
-        
-        const bookingData: IBookingFormShow[] = res.data.map((item: IBookingFormShow) => ({
-          ...item,
-          createAt: new Date(item.createAt),
-          bookTime: new Date(item.bookTime),
-        }));
-        setBookingList(bookingData);
-        setFilteredBookings(bookingData); 
-      } catch (error) {
-        console.error("Error fetching booking data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+    if (typeof window !== "undefined") {
+      const tokenFromStorage = sessionStorage.getItem("token");
+      setToken(tokenFromStorage);
+    }
+  }, []);
 
-    fetchBookingList();
-  }, []); 
+  // Fetch booking data từ API
+  useEffect(() => {
+    if (token) {
+      const fetchBookingList = async () => {
+        setLoading(true);
+        try {
+          const res = await axios.get(
+            "https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/formBookings",
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
 
- 
+          const bookingData: IBookingFormShow[] = res.data.map((item: IBookingFormShow) => ({
+            ...item,
+            createAt: new Date(item.createAt),
+            bookTime: new Date(item.bookTime),
+          }));
+          setBookingList(bookingData);
+          setFilteredBookings(bookingData);
+        } catch (error) {
+          console.error("Error fetching booking data:", error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchBookingList();
+    }
+  }, [token]);
+
   useEffect(() => {
     let filteredList = [...bookingList];
-  
+
     if (search) {
       filteredList = filteredList.filter((item) =>
         removeAccents(item.name)
@@ -94,25 +104,19 @@ const BookingList = ({
       );
     }
 
-    
     if (packageName) {
       filteredList = filteredList.filter(
         (item) => item.packageName === packageName
       );
     }
 
-    
     if (fromDate && toDate) {
-      // Chuyển đổi fromDate và toDate từ chuỗi sang đối tượng Date
       const fromDateObj = new Date(fromDate);
       const toDateObj = new Date(toDate);
-    
-      // Kiểm tra nếu từ API trả về chuỗi ngày tháng, cần phải chuyển đổi đối tượng Date
+
       filteredList = filteredList.filter((item) => {
-        // Đảm bảo rằng item.bookTime được chuyển thành đối tượng Date đúng cách
-        const bookTime = new Date(item.bookTime);  // Chuyển đổi item.bookTime thành đối tượng Date
-    
-        // So sánh bookTime với từ và đến ngày
+        const bookTime = new Date(item.bookTime);
+
         return bookTime.getDate() >= fromDateObj.getDate() && bookTime.getDate() <= toDateObj.getDate();
       });
     }
@@ -151,7 +155,7 @@ const BookingList = ({
             {
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+                Authorization: `Bearer ${token}`,
               },
             }
           );
@@ -196,7 +200,7 @@ const BookingList = ({
             {
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+                Authorization: `Bearer ${token}`,
               },
             }
           );

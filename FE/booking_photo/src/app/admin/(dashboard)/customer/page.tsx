@@ -2,10 +2,8 @@
 import React, { useEffect, useState } from "react";
 import BookingList from "./BookingList";
 import { toast } from "react-toastify";
-import {  IPackagesAdmin } from "@/model/packages";
+import { IPackagesAdmin } from "@/model/packages";
 import axios from "axios";
-
-
 
 const Page = () => {
   const [search, setSearch] = useState("");
@@ -13,29 +11,38 @@ const Page = () => {
   const [packageList, setPackageList] = useState<IPackagesAdmin[]>([]);
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
+  const [token, setToken] = useState<string | null>(null);
 
-  
-  
   useEffect(() => {
-    const fetchPackages = async () => {
-      try {
-        const res = await axios.get(
-          "https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/packages",
-          {
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
-            },
-          }
-        );
-        setPackageList(res.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchPackages();
-  },[])
-  
+    // Kiểm tra xem mã có đang chạy trên client hay không
+    if (typeof window !== "undefined") {
+      // Chỉ lấy token từ sessionStorage khi chạy trên client
+      const tokenFromStorage = sessionStorage.getItem("token");
+      setToken(tokenFromStorage);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (token) {
+      const fetchPackages = async () => {
+        try {
+          const res = await axios.get(
+            "https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/packages",
+            {
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+              },
+            }
+          );
+          setPackageList(res.data);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      fetchPackages();
+    }
+  }, [token]);
 
   useEffect(() => {
     if (fromDate && toDate && fromDate > toDate) {
@@ -45,6 +52,7 @@ const Page = () => {
     }
     console.log(search, packages, fromDate, toDate);
   }, [search, packages, fromDate, toDate]);
+
   return (
     <div className="flex justify-end w-full py-10">
       <div className="w-[83%] flex flex-col gap-6">
@@ -63,7 +71,7 @@ const Page = () => {
             <div className="px-2 bg-white rounded-xl">
               <select
                 onChange={(e) => setPackage(e.target.value)}
-                className="w-fit rounded-xl h-12 px-4  focus:outline-none"
+                className="w-fit rounded-xl h-12 px-4 focus:outline-none"
               >
                 <option value="">Tất cả gói dịch vụ</option>
                 {packageList.map((item, index) => (
@@ -74,7 +82,7 @@ const Page = () => {
               </select>
             </div>
           </div>
-          <div className="flex items-center gap-2  mr-10">
+          <div className="flex items-center gap-2 mr-10">
             <input
               onChange={(e) => setFromDate(e.target.value)}
               className="w-[200px] rounded-xl h-12 px-4 border border-gray-300 focus:outline-none"
