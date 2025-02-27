@@ -31,11 +31,11 @@ const Page = () => {
     };
     fetchProducts();
   }, []);
-
-
+  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+  console.log(cloudName);
 
   return (
-    <div>
+    <div className="w-screen">
       <Navbar />
       <section id="home">
         <Home />

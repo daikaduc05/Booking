@@ -44,19 +44,19 @@ const Navbar = () => {
   }, [router, language]);
 
   return (
-    <div>
+    <div className="">
       <div
         className={`flex flex-col fixed z-10 bg-[#484848] px-10 w-screen top-0 shadow-lg transition-all duration-500 ease-in-out transform ${
           isOpen
-            ? "max-h-[300px] opacity-100 translate-y-0"
+            ? "max-h-[300px] opacity-100 translate-y-0 "
             : "max-h-0 opacity-0 translate-y-[-100%]"
         }`}
         style={{
           overflow: "hidden",
         }}
       >
-        <div className="flex items-center justify-between">
-          <div className="bg-[#484848] pl-10 h-[100px] top-0 z-50 flex items-center">
+        <div className="flex flex-col lg:flex-row items-center justify-between">
+          <div className="bg-[#484848] pl-10 h-[100px] top-0 z-50 flex flex-col lg:flex-row items-center">
             {navbar.map((item, index) => (
               <div
                 onClick={() => scrollToSection(item.id)}
@@ -67,8 +67,8 @@ const Navbar = () => {
               </div>
             ))}
           </div>
-          <div className="flex items-center gap-5 ml-2">
-            <div className="flex gap-2 items-center">
+          <div className="flex flex-col lg:flex-row items-center gap-5 ml-2">
+            <div className="flex flex-col lg:flex-row gap-2 items-center">
               <Image
                 src={`${
                   language === "vn"

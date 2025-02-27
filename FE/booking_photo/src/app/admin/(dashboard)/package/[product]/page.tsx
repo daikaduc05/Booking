@@ -27,6 +27,7 @@ const Page = () => {
   const [images, setImages] = useState<IProductShow[]>([]);
   const [isEdit, setIsEdit] = useState(false);
   const [loading, setLoading] = useState(false);
+  
 
   const { product } = useParams();
   const router = useRouter();
@@ -63,7 +64,7 @@ const Page = () => {
 
   useEffect(() => {
     fetchPackagesData();
-  }, [fetchPackagesData]);
+  }, [fetchPackagesData,loading]);
 
   const imgView = [
     ...images.slice(0, 4),

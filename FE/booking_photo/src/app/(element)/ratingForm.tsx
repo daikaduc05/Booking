@@ -32,6 +32,7 @@ const RatingForm = () => {
         try {
           const response = await fetch("https://api.ipify.org?format=json");
           const data = await response.json();
+          sessionStorage.removeItem("ip");
           sessionStorage.setItem("ip", data.ip);
         } catch (error) {
           console.error("Error fetching IP address:", error);
@@ -78,7 +79,8 @@ const RatingForm = () => {
       );
 
       if (res.status === 200 || res.status === 201) {
-        router.refresh();
+        router.push("/");
+        form.reset();
         toast.success(t("toastSubmit"));
       } else {
         toast.error(t("toastError"));
