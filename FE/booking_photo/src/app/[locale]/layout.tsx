@@ -1,33 +1,39 @@
-import type { Metadata } from "next";
-import { Lora } from "next/font/google";
-import "../globals.css";
+// layout.tsx
+import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
+import { Lora } from "next/font/google";
+import "../globals.css";
 
 const lora = Lora({
-  variable: "--font-lora", 
+  variable: "--font-lora",
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
+export const metadata = {
   title: "Booking Photo",
+};
+
+type LayoutProps = {
+  children: React.ReactNode;
+  params: {
+    locale: string;
+  };
 };
 
 export default async function RootLayout({
   children,
-  params
-}: {
-  children: React.ReactNode;
-  params: Promise<{ locale?: string }>;
-}) {
-  const locale = (await params).locale;
+  params,
+}: LayoutProps) {
+  const { locale } = params;
 
+  // Kiểm tra xem locale có hợp lệ không
   if (!locale || !routing.locales.includes(locale as "en" | "vn")) {
     notFound();
   }
 
+  // Lấy messages cho locale
   const messages = await getMessages({ locale });
 
   return (
