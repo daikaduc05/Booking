@@ -85,6 +85,7 @@ const Home = () => {
           </span>
         ))}
       </h1>
+        
       {/* First Section */}
       <div className="flex items-center justify-between h-[50%] gap-10 px-8">
         <Image
@@ -101,12 +102,12 @@ const Home = () => {
         />
         <div
           id="text1"
-          className={`text-center w-[50%] pr-10 transition-all duration-1000 animate-on-scroll ${
+          className={` w-[50%] pr-10 text-center  transition-all duration-1000 animate-on-scroll ${
             inViewText1 ? "opacity-100" : "opacity-0"
           }`}
         >
           <h1 className="font-semibold text-4xl pb-5">{t('title')}</h1>
-          <p className="text-lg w-[90%] mx-auto">
+          <p className="text-lg w-[90%] mx-auto leading-[50px]  text-justify">
            {t('params1')}
           </p>
         </div>
@@ -116,7 +117,7 @@ const Home = () => {
       <div className="flex items-center h-[50%] gap-10 px-8">
         <p
           id="text2"
-          className={`w-[50%] text-left leading-[50px] pr-10 pl-10 text-lg transition-all duration-1000 animate-on-scroll ${
+          className={`w-[50%] text-justify leading-[50px] pr-10 pl-10 text-lg transition-all duration-1000 animate-on-scroll ${
             inViewText2 ? "opacity-100" : "opacity-0"
           }`}
         >
