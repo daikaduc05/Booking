@@ -5,7 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import { CldUploadWidget } from "next-cloudinary";
 import { IPackagesAdmin } from "@/model/packages";
-import {  IProductShow } from "@/model/product";
+import { IProductShow } from "@/model/product";
 import { TiDelete } from "react-icons/ti";
 import Swal from "sweetalert2";
 import Image from "next/image";
@@ -27,7 +27,6 @@ const Page = () => {
   const [images, setImages] = useState<IProductShow[]>([]);
   const [isEdit, setIsEdit] = useState(false);
   const [loading, setLoading] = useState(false);
-  
 
   const { product } = useParams();
   const router = useRouter();
@@ -51,21 +50,22 @@ const Page = () => {
             }
           ),
         ]);
-  
+
         setPackages(packageResponse.data);
         setImages(productResponse.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-  
+
     fetchData(); // Call the async function
-  }, [product]); 
+  }, [product]);
 
   useEffect(() => {
     fetchPackagesData();
-  }, [fetchPackagesData,loading]);
+  }, [fetchPackagesData, loading]); // Trigger data reload on loading change
 
+  // Create a viewable array to handle display of images
   const imgView = [
     ...images.slice(0, 4),
     ...new Array(4 - images.length).fill(null),
@@ -85,6 +85,7 @@ const Page = () => {
             },
           }
         );
+        // Reload images after successfully uploading
         setLoading(!loading);
         setIsEdit(!isEdit);
       } catch (error) {
@@ -114,6 +115,7 @@ const Page = () => {
               },
             }
           );
+          // Reload images after deleting
           setLoading(!loading);
         } catch (error) {
           console.error("Error deleting image:", error);
