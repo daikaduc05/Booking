@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import axios from "axios";
 import Image from "next/image";
+import { formatStringAsList } from "@/app/(element)/packages";
 
 const PackageInfo = ({
   selectPackages,
@@ -13,7 +14,7 @@ const PackageInfo = ({
   const t = useTranslations("PackageInfo");
   const [productList, setProductList] = useState<IProductShow[]>([]);
   const [viewProduct, setViewProduct] = useState<IProductShow | null>(null);
-
+  
   useEffect(() => {
     const fetchProducts = async () => {
       if (!selectPackages?.packageId) {
@@ -79,13 +80,12 @@ const PackageInfo = ({
             <p className="text-lg text-gray-600">
               {t("from")} {selectPackages?.price.toLocaleString()} VNĐ
             </p>
-            <p className="text-sm text-gray-500">
-              {selectPackages?.description}
-            </p>
+            <div className="text-sm text-gray-500">
+              {formatStringAsList(selectPackages?.description || "")}
+            </div>
           </div>
         </div>
 
-        {/* Product images thumbnails */}
         <div className="mt-8 w-full flex flex-wrap gap-4 justify-start">
           {imgView.map((product, index) => (
             <div

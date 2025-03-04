@@ -14,23 +14,24 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 
 
+export const formatStringAsList = (str: string) => {
+  return (
+    <ul className="list-disc list-inside space-y-2">
+      {str.split("/").map((item, index) => (
+        <li key={index}>
+          {item.trim()}
+        </li>
+      ))}
+    </ul>
+  );
+};
+
 const Packages = ({ productShow }: { productShow: IProductShow[] }) => {
   const t = useTranslations("Packages");
   const router = useRouter();
   const params = useParams();
   const locale = params.locale;
 
-  const formatStringAsList = (str: string) => {
-    return (
-      <ul className="list-disc list-inside space-y-2">
-        {str.split("/").map((item, index) => (
-          <li key={index}>
-            {item.trim()}
-          </li>
-        ))}
-      </ul>
-    );
-  };
  
   const groupByPackage = (products: IProductShow[]): ISlider[] => {
     const grouped: Record<number, ISlider> = {};
