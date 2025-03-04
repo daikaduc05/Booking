@@ -1,101 +1,84 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useTranslations } from "next-intl";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import { Card, CardContent } from "@/components/ui/card";
-import { IProductShow, ISlider } from "@/model/product";
 import Image from "next/image";
 
-const Explore = ({ productShow }: { productShow: IProductShow[] }) => {
+const Explore = () => {
   const t = useTranslations("Explore");
+  const [image, setImage] = useState(
+    "https://i.pinimg.com/736x/25/cd/2b/25cd2bb189bc121450decdc205bc2ef8.jpg"
+  );
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
-  const groupByPackage = (products: IProductShow[]): ISlider[] => {
-    const grouped: Record<number, ISlider> = {};
+  const exploreItems = [
+    {
+      text: t("params1"),
+      image:
+        "https://i.pinimg.com/736x/3e/eb/8c/3eeb8c716957bd3a6b217778e9fab3b2.jpg",
+    },
+    {
+      text: t("params2"),
+      image:
+        "https://i.pinimg.com/736x/15/8d/6f/158d6f79e964bd2c98420eb3a54759ff.jpg",
+    },
+    {
+      text: t("params3"),
+      image:
+        "https://i.pinimg.com/736x/05/7f/fe/057ffe0f5adac8c51cf44e105e290d8e.jpg",
+    },
+    {
+      text: t("params4"),
+      image:
+        "https://i.pinimg.com/736x/81/42/a2/8142a2a78e0830885e185d991b4e3e1d.jpg",
+    },
+    {
+      text: t("params5"),
+      image:
+        "https://i.pinimg.com/474x/38/7a/28/387a284353e7c0c7b1f0adfe6e46d0c5.jpg",
+    },
+  ];
 
-    products.forEach((product) => {
-      if (!grouped[product.packageId]) {
-        grouped[product.packageId] = {
-          productId: [],
-          image: [],
-          packageId: product.packageId,
-          namePackage: product.namePackage,
-          descriptionPackage: product.descriptionPackage,
-        };
-      }
-
-      grouped[product.packageId].productId.push(product.productId);
-      grouped[product.packageId].image.push(product.image);
-    });
-
-    return Object.values(grouped).map((slider) => {
-      return {
-        ...slider,
-        productId: slider.productId.slice(0, 3),
-        image: slider.image.slice(0, 3),
-      };
-    });
+  const handleChangeImage = (newImage: string) => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setImage(newImage);
+      setIsTransitioning(false);
+    }, 200); 
   };
 
-  const sortedProducts = [...productShow].sort(
-    (a, b) => b.productId - a.productId
-  );
-
-  const sliders = groupByPackage(sortedProducts);
-
   return (
-    <div className="bg-[#B1B0B0] h-fit pt-5">
-      <h1 className="text-4xl text-center w-fit h-fit m-auto py-5 px-10 ">
-        {t("title")}
-      </h1>
-      <div className="pt-10">
-        {sliders.length === 0 ? (
-          <div className="flex items-center justify-center font-semibold pb-5">
-            Chưa có dữ liệu
-          </div>
-        ) : (
-          <Carousel className="relative">
-            <CarouselContent>
-              {sliders.map((slider, index) => (
-                <CarouselItem key={index}>
-                  <Card className="bg-[#443F3F] h-fit py-16 grid grid-cols-3">
-                    <div className="col-span-2 grid grid-cols-1 gap-4">
-                      <div className="flex gap-2 mx-auto">
-                        {slider.image.map((img: string, index: number) => (
-                          <div key={index}>
-                            {slider.productId[index] ? (
-                              <Image
-                                alt="Image description"
-                                width={500} 
-                                height={300} 
-                                src={img || "https://via.placeholder.com/300"} 
-                                className={`object-cover transition-all duration-500 ${
-                                  index % 2 === 1 ? "mt-14" : "mb-14"
-                                } h-[350px] w-[240px] rounded-3xl hover:translate-y-[-20px]`}
-                              />
-                            ) : (
-                              <></>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <CardContent className="col-span-1 text-right leading-relaxed flex items-center text-white mr-14">
-                      {slider.descriptionPackage}
-                    </CardContent>
-                  </Card>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="absolute z-50 left-5 transform transition-transform hover:scale-125 duration-300 ease-in-out" />
-            <CarouselNext className="absolute z-50 right-5 transform transition-transform hover:scale-125 duration-300 ease-in-out" />
-          </Carousel>
-        )}
+    <div className="max-h-screen grid grid-cols-5 w-full max-w-screen-xl py-5 mx-auto mb-10">
+      <div className="col-span-2 flex justify-center items-center">
+        <Image
+          width={450}
+          height={450}
+          src={image}
+          alt="hero"
+          className={`object-cover rounded-3xl transition-opacity duration-300 ${
+            isTransitioning ? "opacity-0" : "opacity-100"
+          }`}
+        />
+      </div>
+
+      <div className="col-span-3 p-8 flex flex-col justify-center bg-gray-200 rounded-3xl shadow-lg">
+        <h1 className="text-4xl font-bold text-center text-black mb-4">
+          {t("title")}
+        </h1>
+        <p className="mb-6 text-xl text-center text-gray-700 font-medium">
+          {t("title2")}
+        </p>
+
+        <ul className="list-disc pl-6 flex flex-col gap-4">
+          {exploreItems.map((item, index) => (
+            <li
+              key={index}
+              className="cursor-pointer mb-3 text-lg text-gray-700 hover:scale-105 hover:text-black hover:translate-x-4 duration-300"
+              onClick={() => handleChangeImage(item.image)}
+            >
+              {item.text}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

@@ -1,9 +1,9 @@
 {
   "Home": {
-    "text": "Hello, explore amazing moments with us!",
-    "title": "My Studio!",
-    "params1": "We provide professional photography services, from weddings and events to product photography, helping you capture the most wonderful moments in life. With a team of experienced photographers, we are committed to delivering high-quality, emotional, and creative images that meet all of our clients' needs. Whether it's a romantic wedding, an important event, or stunning product shots for your business, we are dedicated to creating beautiful images that reflect the spirit and story you want to tell. Let us help you preserve unforgettable memories!",
-    "params2": "We are a team of creative photographers with many years of experience. We not only take photos but also capture meaningful moments, tell stories, and evoke emotions in each shot. We are committed to delivering high-quality, creative, and inspiring works. With modern equipment and professional techniques, we always strive to exceed your expectations."
+    "params1": "Booking",
+    "params2": "Photos",
+    "params3": "Capture moments that let every angle shine!",
+    "book": "Book now"
   },
   "Navbar": {
     "home": "Home",
@@ -11,26 +11,27 @@
     "packages": "Service Packages",
     "rating": "Your Reviews",
     "contact": "Contact",
-    "menu": "Menu",
-    "book": "Book Now!"
+    "menu": "Menu"
   },
   "Explore": {
-    "title": "Explore with us!",
-    "params1": "Precious family moments are like gems, let’s preserve them in beautiful photos.",
-    "params2": "Love is like a painting, let those moments be painted with light and color.",
-    "params3": "The joy of children is the joy of life, let the photo capture those memorable moments.",
-    "params4": "A happy life is one that is captured through beautiful moments in love.",
-    "params5": "A successful business is where creativity, effort, and passion come together. Let us preserve that creativity."
+    "title": "Our Studio",
+    "title2": "Where memories are captured in their entirety!",
+    "params1": "Precious family moments are like gems; let’s preserve them in beautiful photos.",
+    "params2": "Love is like a painting; let these moments be painted with light and color.",
+    "params3": "The joy of children is the joy of life; let the photos capture those unforgettable moments.",
+    "params4": "A happy life is one captured through beautiful moments of love.",
+    "params5": "A successful business is where creativity, effort, and passion come together; let us preserve that creativity."
   },
   "Packages": {
-    "title": "Service Packages"
+    "title": "Service Packages",
+    "details": "View details"
   },
   "Rating": {
     "title": "Your reviews help us improve",
     "eMessage": "Please enter a valid email!",
     "ePlaceholder": "Enter your email",
     "submit": "Send",
-    "cTitle": "Comment" ,
+    "cTitle": "Comment",
     "pComment": "Enter your comment",
     "toastSubmit": "Thank you for your feedback!",
     "toastError": "You have commented today, please try again tomorrow!"
@@ -39,12 +40,12 @@
     "title": "Contact",
     "address": "Address"
   },
-  "Booking" :{
+  "Booking": {
     "title": "Fill in the information to complete the booking"
   },
-  "InfoForm" :{
+  "InfoForm": {
     "name": "Full name",
-    "pName" : "Enter your full name",
+    "pName": "Enter your full name",
     "email": "Email",
     "pEmail": "Enter your email",
     "location": "Address",
@@ -56,8 +57,7 @@
     "submit": "Send",
     "reset": "Back to home"
   },
-  "PackageInfo" :{
-    "from" : "From"
+  "PackageInfo": {
+    "from": "From"
   }
-
 }

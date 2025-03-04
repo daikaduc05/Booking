@@ -92,11 +92,15 @@ const RatingForm = () => {
   }
 
   return (
-    <div className="py-5 h-fit bg-[#5c5a5a] w-full flex flex-col items-center">
-      <h1 className="text-4xl text-center w-fit h-fit py-10 px-10 text-white">
-        {t("title")}
-      </h1>
-
+    <div className=" pb-5 h-fit bg-[#0B0B0B] w-full flex flex-col items-center">
+        <div className="py-5 mb-16 bg-[#EDEDED] w-full">
+        <h1 className="text-4xl font-bold text-center text-black mb-4 flex items-center justify-center">
+          <span className="w-16 border-t-2 border-gray-800 mr-4"></span>
+          {t("title")}
+          <span className="w-16 border-t-2 border-gray-800 ml-4"></span>
+        </h1>
+      </div>
+    
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

@@ -17,7 +17,7 @@ export default function AdminLayout({
     // Kiểm tra nếu đang chạy trên client-side
     if (typeof window !== "undefined") {
       const isLogin = sessionStorage.getItem("token");
-      console.log(path);
+      // console.log(path);
       if (!isLogin && !path.includes("login")) {
         // Chuyển hướng đến trang login nếu không có token
         window.location.href = "/admin/login";

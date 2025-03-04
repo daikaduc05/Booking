@@ -1,140 +1,53 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import {useTranslations} from 'next-intl';
-import Image from "next/image";
+import React from "react";
+import { useTranslations } from "next-intl";
+import { scrollToSection } from "../(component)/navbar";
 
 const Home = () => {
-  const [inViewImg1, setInViewImg1] = useState(false);
-  const [inViewText1, setInViewText1] = useState(false);
-  const [inViewImg2, setInViewImg2] = useState(false);
-  const [inViewText2, setInViewText2] = useState(false);
-  const [key, setKey] = useState(0);
   const t = useTranslations("Home");
-  const text = t("text");
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setKey((prevKey) => prevKey + 1);
-    }, 8000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            if (entry.target.id === "img1") {
-              setInViewImg1(true);
-            }
-            if (entry.target.id === "text1") {
-              setInViewText1(true);
-            }
-            if (entry.target.id === "img2") {
-              setInViewImg2(true);
-            }
-            if (entry.target.id === "text2") {
-              setInViewText2(true);
-            }
-          } else {
-            if (entry.target.id === "img1") {
-              setInViewImg1(false);
-            }
-            if (entry.target.id === "text1") {
-              setInViewText1(false);
-            }
-            if (entry.target.id === "img2") {
-              setInViewImg2(false);
-            }
-            if (entry.target.id === "text2") {
-              setInViewText2(false);
-            }
-          }
-        });
-      },
-      {
-        threshold: 0.3, // Khi 30% phần tử xuất hiện trong viewport
-      }
-    );
-
-    const elements = document.querySelectorAll(".animate-on-scroll");
-    elements.forEach((el) => observer.observe(el));
-
-    // Dọn dẹp observer khi component bị unmount
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
-
   return (
-    <div className="bg-[#d8d8d8] min-h-screen  flex flex-col">
-      <h1
-        key={key}
-        className="h-[100px] flex justify-center items-center text-3xl font-semibold"
-      >
-        {text.split("").map((char, index) => (
-          <span
-            key={index}
-            className={`inline-block overflow-hidden animate-text-reveal`}
-            style={{
-              animationDelay: `${index * 0.08}s`, // Vẫn cần phải sử dụng animation delay
-            }}
-          >
-            {char === " " ? "\u00A0" : char}
-          </span>
-        ))}
-      </h1>
-        
-      {/* First Section */}
-      <div className="flex items-center justify-between h-[50%] gap-10 px-8">
-        <Image
-          id="img1"
-          src="https://i.pinimg.com/736x/1f/9b/2a/1f9b2adfaf6052055d5754b1c49464a9.jpg"
-          alt="booking_photo"
-          width={700}
-          height={400}
-          className={`object-cover h-screen py-5  rounded-[80px] transition-all duration-1000 animate-on-scroll ${
-            inViewImg1
-              ? "translate-y-0 opacity-100"
-              : "translate-y-[100px] opacity-0"
-          }`}
-        />
-        <div
-          id="text1"
-          className={` w-[50%] pr-10 text-center  transition-all duration-1000 animate-on-scroll ${
-            inViewText1 ? "opacity-100" : "opacity-0"
-          }`}
-        >
-          <h1 className="font-semibold text-4xl pb-5">{t('title')}</h1>
-          <p className="text-lg w-[90%] mx-auto leading-[50px]  text-justify">
-           {t('params1')}
+    <div className="relative min-h-screen flex items-center justify-center bg-[#d8d8d8] bg-[url('https://i.pinimg.com/736x/14/e3/10/14e310a020cc3ac402dd5aa1ffdbf9f8.jpg')] bg-cover bg-center bg-no-repeat">
+      <div className="absolute inset-0 bg-black/50"></div>
+      <div className="relative z-10 w-[90%] md:w-[60%] lg:w-[40%] flex flex-col items-center text-center">
+        <div>
+          <h1 className="text-4xl md:text-6xl font-bold text-white flex items-center justify-center fadeInUpLoop">
+            <span>{t('params1')}</span>
+            <span className="mx-4 text-2xl md:text-4xl">—</span>
+            <span>{t('params2')}</span>
+          </h1>
+          <p className="text-white mt-4 text-sm md:text-base lg:text-lg fadeInUpLoop delay-300">
+            {t('params3')}
           </p>
+          <style jsx>{`
+            @keyframes fadeInUpLoop {
+              0% {
+                opacity: 0;
+                transform: translateY(20px);
+              }
+              42.86% {
+                opacity: 1;
+                transform: translateY(0);
+              }
+              100% {
+                opacity: 1;
+                transform: translateY(0);
+              }
+            }
+            .fadeInUpLoop {
+              animation: fadeInUpLoop 5.5s ease-out infinite;
+            }
+            .delay-300 {
+              animation-delay: 0.3s;
+            }
+          `}</style>
         </div>
-      </div>
 
-      {/* Second Section */}
-      <div className="flex items-center h-[50%] gap-10 px-8">
-        <p
-          id="text2"
-          className={`w-[50%] text-justify leading-[50px] pr-10 pl-10 text-lg transition-all duration-1000 animate-on-scroll ${
-            inViewText2 ? "opacity-100" : "opacity-0"
-          }`}
+        <button
+          onClick={() => scrollToSection("packages")}
+          className="bg-white text-black px-8 py-2 z-0 rounded-full mt-8 font-semibold hover:bg-gray-400 transition duration-300"
         >
-         {t('params2')}
-        </p>
-        <Image
-          id="img2"
-          src="https://i.pinimg.com/736x/79/aa/ea/79aaea1782152703088ae82f47fce5f9.jpg"
-          alt="booking_photo_2"
-          width={800}
-          height={500}
-          className={`object-cover h-screen py-5 rounded-[80px] transition-all duration-1000 animate-on-scroll ${
-            inViewImg2
-              ? "translate-y-0 opacity-100"
-              : "translate-y-[100px] opacity-0"
-          }`}
-        />
+          {t('book')}
+        </button>
       </div>
     </div>
   );

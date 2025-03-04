@@ -41,7 +41,7 @@ const Page = () => {
             },
           }
         );
-        console.log(res.data);
+        // console.log(res.data);
         setPackageItem(res.data);
       } catch (error) {
         console.error(error);
@@ -99,7 +99,7 @@ const Page = () => {
           icon: "error",
         });
       }
-      console.log("Edit package", editId);
+      // console.log("Edit package", editId);
     } else {
       Swal.fire({
         title:

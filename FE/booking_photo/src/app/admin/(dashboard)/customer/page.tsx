@@ -50,7 +50,7 @@ const Page = () => {
       setFromDate("");
       setToDate("");
     }
-    console.log(search, packages, fromDate, toDate);
+    // console.log(search, packages, fromDate, toDate);
   }, [search, packages, fromDate, toDate]);
 
   return (

@@ -80,6 +80,7 @@ const BookingList = ({
             createAt: new Date(item.createAt),
             bookTime: new Date(item.bookTime),
           }));
+          // console.log(bookingData);
           setBookingList(bookingData);
           setFilteredBookings(bookingData);
         } catch (error) {

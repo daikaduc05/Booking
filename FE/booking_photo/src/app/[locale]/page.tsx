@@ -21,7 +21,7 @@ const Page = () => {
             }
           }
         );
-        console.log(res.data);
+        // console.log(res.data);
         if (res) {
           setProductShow(res.data);
         }
@@ -31,19 +31,20 @@ const Page = () => {
     };
     fetchProducts();
   }, []);
-  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-  console.log(cloudName);
+  // const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+  // console.log(cloudName);
+  
 
   return (
-    <div className="w-screen">
+    <div className="max-w-screen flex flex-col  justify-start ">
       <Navbar />
       <section id="home">
         <Home />
       </section>
       <section id="discover">
-        <Explore productShow={productShow} />
+        <Explore />
       </section>
-      <section id="packages">
+      <section id="packages" >
         <Packages productShow={productShow} />
       </section>
       <section id="reviews">

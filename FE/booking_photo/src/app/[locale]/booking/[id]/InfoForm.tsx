@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import {  IPackagesAdmin } from "@/model/packages";
+import { IPackagesAdmin } from "@/model/packages";
 
 import { useTranslations } from "next-intl";
 import axios from "axios";
@@ -73,34 +73,40 @@ const InfoForm = ({
     },
   });
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const selectedDateTime = new Date(`${values.date} ${values.time}`);
+    const localDateTimeStr = `${values.date}T${values.time}`;
+    
     const data = {
       email: values.email,
       name: values.username,
-      bookTime: selectedDateTime,
+      bookTime: localDateTimeStr,
       message: values.note,
-      location: "",
+      location: values.location,
     };
+    console.log(data);
     try {
-      const res = await axios.post(`https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/formBookings/create/${selectPackages?.packageId}`,data, {
-        headers: {
-          "Content-Type": "application/json",
+      const res = await axios.post(
+        `https://bookingphoto-a7d5f0gcgtdtfwaz.southeastasia-01.azurewebsites.net/formBookings/create/${selectPackages?.packageId}`,
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      })
-      if(res){
+      );
+      if (res) {
         Swal.fire({
-          title:"Đã đặt lịch thành công",
-          icon:"success"
-        })
-        router.push("/")
+          title: "Đã đặt lịch thành công",
+          icon: "success",
+        });
+        router.push("/");
       }
     } catch (error) {
       Swal.fire({
-        title:"Lỗi",
-        text:"Có lỗi xảy ra khi đặt lịch. Vui lòng thử lại",
-        icon:"error"
-      })
-      console.log(error)
+        title: "Lỗi",
+        text: "Có lỗi xảy ra khi đặt lịch. Vui lòng thử lại",
+        icon: "error",
+      });
+      console.log(error);
     }
   }
   const router = useRouter();
@@ -212,13 +218,14 @@ const InfoForm = ({
           <div className="flex justify-between">
             <Button
               onClick={() => router.push(`/${params.locale}/`)}
-              className="px-7 bg-red-600 hover:bg-red-500"
+              className="px-7 bg-black hover:bg-gray-700 text-white rounded-full"
               type="reset"
             >
               {t("reset")}
             </Button>
+
             <Button
-              className="px-7 bg-blue-600 hover:bg-blue-500"
+              className="px-7 bg-gray-800 hover:bg-gray-600 text-white rounded-full"
               type="submit"
             >
               {t("submit")}

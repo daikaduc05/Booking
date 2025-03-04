@@ -1,9 +1,9 @@
 {
   "Home": {
-    "text": "Chào bạn, khám phá những khoảnh khắc tuyệt vời cùng chúng tôi!",
-    "title": "Studio của tôi !",
-    "params1": "Chúng tôi cung cấp dịch vụ chụp ảnh chuyên nghiệp, từ chụp ảnh cưới, sự kiện, đến sản phẩm, giúp bạn lưu giữ những khoảnh khắc tuyệt vời nhất trong cuộc sống. Với đội ngũ nhiếp ảnh gia giàu kinh nghiệm, chúng tôi cam kết mang đến những bức ảnh chất lượng cao, đầy cảm xúc và sáng tạo, phù hợp với mọi yêu cầu của khách hàng. Dù là một buổi tiệc cưới lãng mạn, một sự kiện quan trọng, hay những bức ảnh sản phẩm ấn tượng cho doanh nghiệp, chúng tôi luôn tận tâm để tạo ra những hình ảnh đẹp, phản ánh đúng tinh thần và câu chuyện mà bạn muốn kể. Hãy để chúng tôi giúp bạn lưu giữ những ký ức không thể nào quên!",
-    "params2": "Chúng tôi là đội ngũ nhiếp ảnh gia sáng tạo với nhiều năm kinh nghiệm. Chúng tôi không chỉ chụp ảnh, mà còn ghi lại những khoảnh khắc ý nghĩa, kể câu chuyện và mang lại cảm xúc trong từng bức ảnh. Chúng tôi cam kết mang đến những tác phẩm chất lượng, sáng tạo và đầy cảm hứng. Với thiết bị hiện đại và kỹ thuật chuyên nghiệp, chúng tôi luôn nỗ lực vượt qua mong đợi của bạn."
+    "params1": "Đặt lịch",
+    "params2": "Chụp ảnh",
+    "params3": "Lưu giữ khoảnh khắc tỏa sáng mọi góc nhìn!",
+    "book": "Đặt ngay"
   },
   "Navbar": {
     "home": "Trang chủ",
@@ -11,19 +11,20 @@
     "packages": "Gói dịch vụ",
     "rating": "Đánh giá của bạn",
     "contact": "Liên hệ",
-    "menu": "Danh mục",
-    "book": "Đặt ngay !"
+    "menu": "Danh mục"
   },
   "Explore": {
-    "title": "Khám phá cùng chúng tôi !",
-    "params1": "Những khoảnh khắc gia đình quý giá như ngọc, hãy lưu giữ chúng trong những bức ảnh đẹp.",
-    "params2": "Tình yêu đẹp như một bức tranh, hãy để những khoảnh khắc ấy được vẽ lên bằng ánh sáng và màu sắc.",
-    "params3": "Niềm vui của trẻ em là niềm vui của cuộc sống, hãy để bức ảnh lưu giữ những giây phút đáng nhớ đó.",
-    "params4": "Một cuộc sống hạnh phúc là một cuộc sống được ghi lại qua những khoảnh khắc đẹp trong tình yêu.",
-    "params5": "Doanh nghiệp thành công là nơi mà sự sáng tạo, nỗ lực và đam mê hội tụ. Hãy để chúng tôi lưu giữ sự sáng tạo ấy."
+    "title": "Studio của chúng tôi",
+    "title2": "Nơi lưu giữ khoảnh khắc trọn vẹn!",
+    "params1": "Những khoảnh khắc gia đình quý giá như những viên ngọc, hãy lưu giữ chúng trong những bức ảnh đẹp.",
+    "params2": "Tình yêu như một bức tranh, hãy để những khoảnh khắc ấy được vẽ lên bằng ánh sáng và màu sắc.",
+    "params3": "Niềm vui của trẻ em là niềm vui của cuộc sống, hãy để những bức ảnh ghi lại những khoảnh khắc đáng nhớ ấy.",
+    "params4": "Một cuộc sống hạnh phúc là một cuộc sống được ghi lại qua những khoảnh khắc đẹp của tình yêu.",
+    "params5": "Một doanh nghiệp thành công là nơi mà sự sáng tạo, nỗ lực và đam mê hòa quyện vào nhau. Hãy để chúng tôi lưu giữ sự sáng tạo đó."
   },
   "Packages": {
-    "title": "Gói dịch vụ"
+    "title": "Gói dịch vụ",
+    "details": "Xem chi tiết"
   },
   "Rating": {
     "title": "Đánh giá của bạn giúp chúng tôi hoàn thiện!",
@@ -36,15 +37,15 @@
     "toastError": "Bạn đã bình luận hôm nay, vui lòng thử lại ngày mai!"
   },
   "Footer": {
-   "title": "Thông tin liên hệ",
+    "title": "Thông tin liên hệ",
     "address": "Địa chỉ liên lạc"
   },
-  "Booking":{
+  "Booking": {
     "title": "Điền thông tin để hoàn tất đặt lịch"
   },
-  "InfoForm" :{
+  "InfoForm": {
     "name": "Họ và tên",
-    "pName" : "Nhập họ và tên",
+    "pName": "Nhập họ và tên",
     "email": "Email",
     "pEmail": "Nhập email",
     "location": "Địa chỉ",
@@ -56,7 +57,7 @@
     "submit": "Gửi",
     "reset": "Trở lại trang chủ"
   },
-  "PackageInfo" :{
-   "from" : "Từ"
+  "PackageInfo": {
+    "from": "Từ"
   }
 }
