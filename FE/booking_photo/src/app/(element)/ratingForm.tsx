@@ -23,7 +23,7 @@ import axios from "axios";
 const RatingForm = () => {
   const router = useRouter();
   const t = useTranslations("Rating");
-  const [hoverRating, setHoverRating] = useState(0);
+  const [hoverRating, setHoverRating] = useState(5);
 
   // Fetch IP chỉ khi chưa có trong sessionStorage
   useEffect(() => {
@@ -55,7 +55,7 @@ const RatingForm = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
-      ratingIndex: 1,
+      ratingIndex: 5,
       comment: "",
     },
   });
